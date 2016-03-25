@@ -19,6 +19,7 @@ public abstract class Loader<T>  {
     protected static final String NAME_DB = "aviv_db_capture";
     protected Context mContext;
     protected DaoSession mSession;
+    protected  List<T> mLoadedList;
 
     protected void init(Context context){
         mContext = context;
@@ -27,6 +28,7 @@ public abstract class Loader<T>  {
         DaoMaster daoMaster = new DaoMaster(db);
         mSession = daoMaster.newSession();
         mSession.getImageDataDao();
+        mLoadedList = new ArrayList<>();
     }
 
     abstract AbstractDao<T,Long> getDao();

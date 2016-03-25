@@ -3,6 +3,10 @@ package com.aviv.capturehelper.common;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
+import android.view.LayoutInflater;
+import android.view.View;
+
+import com.aviv.capturehelper.R;
 
 
 /**
@@ -36,6 +40,17 @@ public class Dialoger {
                     }
                 })
                 .show();
+    }
+
+    public static  AlertDialog createModifyAlertDialog(Context context, String title)
+    {
+        LayoutInflater inflater = LayoutInflater.from(context);
+        View view = inflater.inflate(R.layout.dialog_custom, null);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setView(view);
+
+        return builder.create();
     }
 
 }

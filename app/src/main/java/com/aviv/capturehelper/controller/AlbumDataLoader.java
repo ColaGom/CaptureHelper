@@ -1,5 +1,6 @@
 package com.aviv.capturehelper.controller;
 
+import com.aviv.capturehelper.common.Util;
 import com.aviv.capturehelper.model.dao.AlbumData;
 
 import java.io.File;
@@ -14,6 +15,9 @@ import de.greenrobot.dao.AbstractDao;
  * Created by Colabear on 2016-03-22.
  */
 public class AlbumDataLoader extends Loader<AlbumData> {
+
+    private int mImageCount;
+
     @Override
     AbstractDao<AlbumData, Long> getDao() {
         return mSession.getAlbumDataDao();
@@ -29,24 +33,43 @@ public class AlbumDataLoader extends Loader<AlbumData> {
         return null;
     }
 
+    public int getAlbumCount()
+    {
+        return getAll().size();
+    }
+
+
+    public int getImageCount()
+    {
+        return mImageCount;
+    }
+
     @Override
     public List<AlbumData> getAll() {
+        if(mLoadedList.size() == 0) {
+            mLoadedList = getDao().loadAll();
+        }
 
-        List<AlbumData> result = getDao().loadAll();
-        invaildData(result);
-        return result;
+        invaildData(mLoadedList);
+        return mLoadedList;
     }
 
     private void invaildData(List<AlbumData> list)
     {
         Iterator<AlbumData> it = snapshotIterator(list);
+
+        mImageCount = 0;
+
         while (it.hasNext())
         {
             AlbumData album = it.next();
-            if(!new File(album.getPath()).exists())
+            File dir = new File(album.getPath());
+            if(!dir.exists())
             {
                 getDao().delete(album);
                 list.remove(album);
+            }else{
+                mImageCount += Util.getListOfImageFiles(dir).length;
             }
         }
     }
@@ -59,11 +82,11 @@ public class AlbumDataLoader extends Loader<AlbumData> {
 
     @Override
     public void insert(AlbumData data) {
+        mLoadedList.add(data);
         getDao().insert(data);
     }
 
     @Override
     void insert(ArrayList<AlbumData> arr) {
-
     }
 }

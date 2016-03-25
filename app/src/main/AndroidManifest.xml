@@ -33,8 +33,8 @@
 
         <activity
             android:name=".view.activity.MainActivity"
-            android:label="@string/title_activity_album_list"
-            android:theme="@style/AppTheme">
+            android:label="@string/title_activity_album_list">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -46,6 +46,10 @@
         <activity
             android:name=".view.activity.AlbumPopupActivity"
             android:theme="@style/Theme.AppCompat.Translucent"
+            android:launchMode="singleTop"/>
+
+        <activity
+            android:name=".view.activity.AlbumActivity"
             android:launchMode="singleTop"/>
     </application>
 

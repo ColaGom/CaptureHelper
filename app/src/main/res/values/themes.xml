@@ -15,6 +15,11 @@
     <style name="TextAppearance.Content.Default" parent="TextAppearance.AppCompat.Inverse">
     </style>
 
+    <style name="TextAppearance.Content.Default.Inverse" parent="TextAppearance.AppCompat">
+        <item name="android:textSize">@dimen/size_font_normal</item>
+    </style>
+
+
     <style name="Theme.AppCompat.Translucent" parent="@style/AppTheme">
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:colorBackgroundCacheHint">@null</item>
@@ -25,5 +30,11 @@
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowActionBar">false</item>
         <item name="android:windowFullscreen">true</item>
+    </style>
+
+    <style name="NavigationView">
+        <item name="android:listPreferredItemHeight">50dp</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:textSize">@dimen/size_font_normal</item>
     </style>
 </resources>

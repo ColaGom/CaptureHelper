@@ -53,11 +53,6 @@ public class CreateAlbumActivity extends BaseActivity {
         }
     }
 
-    @Override
-    public void onClick(View v) {
-        super.onClick(v);
-    }
-
     private void createAlbum(){
         String name = mEtInput.getText().toString();
         String path = Environment.getExternalStorageDirectory()

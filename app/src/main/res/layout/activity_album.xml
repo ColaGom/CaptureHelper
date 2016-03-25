@@ -34,9 +34,12 @@
     </android.support.v7.widget.Toolbar>
 
     <GridView
+        android:layout_below="@id/toolbar"
         android:id="@+id/gv_album"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:horizontalSpacing="2dp"
+        android:verticalSpacing="2dp"
         android:numColumns="3"/>
 
 </RelativeLayout>

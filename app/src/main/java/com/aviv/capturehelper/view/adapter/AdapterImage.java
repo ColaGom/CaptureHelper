@@ -35,6 +35,17 @@ public class AdapterImage extends ArrayAdapter<File> {
         mContext = context;
         mInflater = LayoutInflater.from(context);
         mSelectedList = new ArrayList<>();
+        mRes = resource;
+    }
+
+    public int getSelectedCount()
+    {
+        return mSelectedList.size();
+    }
+
+    public List<File> getSelectedItem()
+    {
+        return mSelectedList;
     }
 
     public void selectAll()
