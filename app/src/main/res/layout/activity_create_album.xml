@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/line_gray"
+    android:fitsSystemWindows="true"
+    tools:context="com.aviv.capturehelper.view.activity.CreateAlbumActivity">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        app:theme="@style/AppTheme.Toolbar"
+        app:titleTextAppearance="@style/AppTheme.Toolbar.Title">
+
+        <FrameLayout
+            android:id="@+id/btn_create"
+            android:layout_width="100dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="right"
+            android:padding="@dimen/default_padding"
+            android:background="@drawable/selector_main_blue100">
+
+            <TextView
+                android:id="@+id/tv_right"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right|center_vertical"
+                android:text="@string/label_create"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/size_font_normal" />
+        </FrameLayout>
+
+    </android.support.v7.widget.Toolbar>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/toolbar"
+        android:layout_marginTop="@dimen/default_padding"
+        android:background="@android:color/white"
+        android:orientation="horizontal"
+        android:padding="@dimen/default_padding">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/label_album_name" />
+
+        <EditText
+            android:id="@+id/et_input"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="4" />
+    </LinearLayout>
+
+</RelativeLayout>

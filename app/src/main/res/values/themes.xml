@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="AppTheme.Toolbar" parent="ThemeOverlay.AppCompat.ActionBar">
+        <!-- Customize color of navigation drawer icon and back arrow -->
+        <item name="colorControlNormal">@android:color/white</item>
+    </style>
+
+    <style name="AppTheme.Toolbar.Title" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
+        <!-- Set proper title size -->
+        <item name="android:textSize">@dimen/abc_text_size_title_material_toolbar</item>
+        <!-- Set title color -->
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
+    <style name="TextAppearance.Content.Default" parent="TextAppearance.AppCompat.Inverse">
+    </style>
+
+    <style name="Theme.AppCompat.Translucent" parent="@style/AppTheme">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:colorBackgroundCacheHint">@null</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowAnimationStyle">@android:style/Animation</item>
+        <item name="android:textColorPrimary">@android:color/black</item>
+        <item name="android:textColorSecondary">@android:color/black</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowActionBar">false</item>
+        <item name="android:windowFullscreen">true</item>
+    </style>
+</resources>

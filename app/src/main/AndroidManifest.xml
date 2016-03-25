@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.aviv.capturehelper">
+
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+    <application
+        android:name=".common.GlobalApplication"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme">
+
+
+        <service
+            android:name=".common.CaptureService"
+            android:enabled="true">
+            <intent-filter>
+                <action android:name="captureherper.service" />
+            </intent-filter>
+        </service>
+
+        <receiver
+            android:name=".common.CaptureReceiver"
+            android:enabled="true"
+            android:label="CaptureReceiver">
+            <intent-filter>
+                <action android:name="Action.Restart.Persistent" />
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+
+        <activity
+            android:name=".view.activity.MainActivity"
+            android:label="@string/title_activity_album_list"
+            android:theme="@style/AppTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity android:name=".view.activity.CreateAlbumActivity"/>
+
+        <activity
+            android:name=".view.activity.AlbumPopupActivity"
+            android:theme="@style/Theme.AppCompat.Translucent"
+            android:launchMode="singleTop"/>
+    </application>
+
+</manifest>
