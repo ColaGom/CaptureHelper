@@ -7,7 +7,12 @@ import android.widget.GridView;
 
 import com.aviv.capturehelper.R;
 import com.aviv.capturehelper.common.Const;
+import com.aviv.capturehelper.common.Util;
 import com.aviv.capturehelper.model.dao.AlbumData;
+import com.aviv.capturehelper.view.adapter.AdapterImage;
+
+import java.io.File;
+import java.util.Arrays;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -15,10 +20,11 @@ import butterknife.OnClick;
 
 public class AlbumActivity extends BaseActivity {
 
-    AlbumData mAlbum;
-
     @Bind(R.id.gv_album)
     GridView mGvAlbum;
+
+    AlbumData mAlbum;
+    AdapterImage mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +40,9 @@ public class AlbumActivity extends BaseActivity {
         toolbar.setTitle(mAlbum.getName());
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        File[] images = Util.getListOfImageFiles(mAlbum.getPath());
+        mAdapter = new AdapterImage(this, R.layout.row_image, Arrays.asList(images));
     }
 
     @OnClick(R.id.btn_modify)

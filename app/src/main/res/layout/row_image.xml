@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.aviv.capturehelper.view.SquaredFrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.aviv.capturehelper.view.SquaredImageView
+        android:id="@id/iv_image"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <FrameLayout
+        android:id="@+id/frame"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/outline_main_4"
+        android:visibility="gone"/>
+
+</com.aviv.capturehelper.view.SquaredFrameLayout>
