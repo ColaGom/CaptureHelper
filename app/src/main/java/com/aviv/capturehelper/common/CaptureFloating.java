@@ -8,12 +8,16 @@ import android.graphics.PixelFormat;
 import android.graphics.Rect;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
+import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.Toast;
 
 import com.aigestudio.wheelpicker.core.AbstractWheelDecor;
+import com.aigestudio.wheelpicker.core.AbstractWheelPicker;
 import com.aigestudio.wheelpicker.view.WheelCurvedPicker;
 import com.aviv.capturehelper.R;
 import com.aviv.capturehelper.controller.AlbumDataLoader;
@@ -30,11 +34,14 @@ public class CaptureFloating extends Service {
 
     private WindowManager mWindowManager;
     private View mFloatingVIew;
+    private WindowManager.LayoutParams mCurrentParams;
+    private int mCurrentIdx;
+
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
         return null;
-    }  
+    }
 
     @Override
     public void onCreate() {
@@ -44,21 +51,72 @@ public class CaptureFloating extends Service {
 
         setFloatingView();
 
-        WindowManager.LayoutParams params = new WindowManager.LayoutParams((int)Util.dpToPx(this, 180), (int)Util.dpToPx(this, 120),
+        int width = (int)Util.dpToPx(this, 180);
+        int height = (int)Util.dpToPx(this, 120);
+
+        mCurrentParams = new WindowManager.LayoutParams(width, height,
                 WindowManager.LayoutParams.TYPE_PHONE, WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE, PixelFormat.TRANSLUCENT);
 
-        params.x = 0;
-        params.y = 0;
-        params.gravity = Gravity.CENTER | Gravity.CENTER;
+        DisplayMetrics displaymetrics = new DisplayMetrics();
+        mWindowManager.getDefaultDisplay().getMetrics(displaymetrics);
 
-        mWindowManager.addView(mFloatingVIew, params);
+        mCurrentParams.x = displaymetrics.widthPixels / 2 - width / 2;
+        mCurrentParams.y = 0;
+        mCurrentParams.gravity = Gravity.CENTER | Gravity.CENTER;
+
+        mWindowManager.addView(mFloatingVIew, mCurrentParams);
     }
 
     private void setFloatingView()
     {
         LayoutInflater inflater = LayoutInflater.from(this);
         mFloatingVIew = inflater.inflate(R.layout.floating_capture, null);
-        WheelCurvedPicker wheelCurvedPicker = (WheelCurvedPicker) mFloatingVIew.findViewById(R.id.wcp_album);
+
+        mFloatingVIew.setOnTouchListener(new View.OnTouchListener() {
+
+            int x;
+            int y;
+            float touchedX;
+            float touchedY;
+
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+
+                        x = mCurrentParams.x;
+                        y = mCurrentParams.y;
+                        touchedX = event.getRawX();
+                        touchedY = event.getRawY();
+                        break;
+
+                    case MotionEvent.ACTION_UP:
+                    case MotionEvent.ACTION_MOVE:
+                        mCurrentParams.x = (int) (x + (event.getRawX() - touchedX));
+                        mCurrentParams.y = (int) (y + (event.getRawY() - touchedY));
+
+                        mWindowManager.updateViewLayout(mFloatingVIew, mCurrentParams);
+                        break;
+                }
+                return false;
+            }
+        });
+
+        mFloatingVIew.findViewById(R.id.btn_close).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                stopFloating();
+            }
+        });
+
+        mFloatingVIew.findViewById(R.id.btn_capture).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        WheelCurvedPicker wheelCurvedPicker  = (WheelCurvedPicker) mFloatingVIew.findViewById(R.id.wcp_album);
         wheelCurvedPicker.setWheelDecor(true, new AbstractWheelDecor() {
             @Override
             public void drawDecor(Canvas canvas, Rect rectLast, Rect rectNext, Paint paint) {
@@ -66,7 +124,45 @@ public class CaptureFloating extends Service {
             }
         });
         AlbumDataLoader loader = Master.getInstance().getAlbumDataLoader();
-        wheelCurvedPicker.setData(extractAlbumName(loader.getAll()));
+        List<String> datas = extractAlbumName(loader.getAll());
+        if(datas.size() > 0) {
+            wheelCurvedPicker.setData(extractAlbumName(loader.getAll()));
+            wheelCurvedPicker.setOnWheelChangeListener(new AbstractWheelPicker.OnWheelChangeListener() {
+                @Override
+                public void onWheelScrolling(float deltaX, float deltaY) {
+
+                }
+
+                @Override
+                public void onWheelSelected(int index, String data) {
+                    mCurrentIdx = index;
+                }
+
+                @Override
+                public void onWheelScrollStateChanged(int state) {
+
+                }
+            });
+        }
+        else{
+            Toast.makeText(this, getString(R.string.msg_empty_album), Toast.LENGTH_SHORT).show();
+            stopFloating();
+        }
+    }
+
+    private AlbumData getSelectedAlbum()
+    {
+        return Master.getInstance().getAlbumDataLoader().getAll().get(mCurrentIdx);
+    }
+
+    private void capture()
+    {
+
+    }
+
+    private void stopFloating() {
+        mWindowManager.removeView(mFloatingVIew);
+        stopSelf();
     }
 
     private List<String> extractAlbumName(List<AlbumData> list)

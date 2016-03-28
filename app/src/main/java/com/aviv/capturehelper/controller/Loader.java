@@ -23,12 +23,12 @@ public abstract class Loader<T>  {
 
     protected void init(Context context){
         mContext = context;
+        mLoadedList = new ArrayList<T>();
         DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(mContext, NAME_DB, null);
         SQLiteDatabase db = helper.getWritableDatabase();
         DaoMaster daoMaster = new DaoMaster(db);
         mSession = daoMaster.newSession();
         mSession.getImageDataDao();
-        mLoadedList = new ArrayList<>();
     }
 
     abstract AbstractDao<T,Long> getDao();

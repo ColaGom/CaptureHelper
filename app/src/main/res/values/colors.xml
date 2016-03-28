@@ -21,6 +21,7 @@
     <color name="myNavigationColor">#000000</color>
     <color name="tr_black">#AA000000</color>
     <color name="foreground_material_light">#ffffff</color>
+    <color name="tr_white_black" >#AAAAAAAA</color>
 
     <drawable name="pressed_gray">#0c000000</drawable>
     <drawable name="selected_gray">#2c000000</drawable>

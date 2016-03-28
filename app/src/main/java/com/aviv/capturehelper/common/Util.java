@@ -10,11 +10,16 @@ import com.aviv.capturehelper.model.wrapper.WrapAlbumData;
 
 import java.io.File;
 import java.io.FileFilter;
+import java.text.SimpleDateFormat;
 
 /**
  * Created by Counter on 2016-03-11.
  */
 public class Util {
+
+    public static String getNowDateString(SimpleDateFormat format){
+        return format.format(new java.util.Date());
+    }
 
     public static float pxToDp(final Context context, final float px) {
         return px / context.getResources().getDisplayMetrics().density;

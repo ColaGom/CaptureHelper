@@ -17,7 +17,7 @@ public class UserPrefLoader {
         mPrefer = context.getSharedPreferences(KEY_PREF, 0);
     }
 
-    private  final  String KEY_SAVE_FOLDER_PATH = "key.save.folder";
+    private final  String KEY_SAVE_FOLDER_PATH = "key.save.folder";
 
     public String getFolderPath()
     {
@@ -32,4 +32,15 @@ public class UserPrefLoader {
         editor.commit();
     }
 
+    private final  String KEY_SAVE_PREFIX = "key.save.prefix";
+    public String getSavePrefix()
+    {
+        return mPrefer.getString(KEY_SAVE_PREFIX, Const.DEFULAT_SAVE_PREFIX);
+    }
+
+    private final  String KEY_SAVE_SUFFIX = "key.save.suffix";
+    public String getSaveSuffix()
+    {
+        return mPrefer.getString(KEY_SAVE_SUFFIX, Const.DEFULAT_SAVE_SUFFIX);
+    }
 }

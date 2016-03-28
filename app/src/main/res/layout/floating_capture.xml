@@ -3,26 +3,46 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="180dp"
     android:layout_height="100dp"
-    android:background="@drawable/background_rounded_8_tr_back"
+    android:background="@drawable/selector_rounded_trblack_trwhiteblack"
     android:orientation="horizontal"
     android:padding="@dimen/floating_padding">
 
     <com.aigestudio.wheelpicker.view.WheelCurvedPicker
         android:id="@+id/wcp_album"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
+        android:layout_height="match_parent"
         android:layout_marginRight="@dimen/default_padding"
+        app:wheel_text_size="30sp"
+        android:layout_weight="1"
         android:background="@drawable/background_rounded_8_white" />
 
-    <Button
-        android:layout_gravity="center_vertical"
-        android:id="@+id/btn_capture"
+    <LinearLayout
         android:layout_width="0dp"
-        android:layout_height="50dp"
+        android:layout_height="match_parent"
         android:layout_weight="1"
-        android:background="@drawable/selector_rounded_main_blue100"
-        android:text="@string/label_capture"
-        android:textAppearance="@style/TextAppearance.Content.Default.Inverse" />
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/btn_capture"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:background="@drawable/selector_rounded_main_blue100"
+            android:text="@string/label_capture"
+            android:textAppearance="@style/TextAppearance.Content.Default.Inverse"
+            android:layout_marginBottom="@dimen/default_padding"/>
+
+        <Button
+            android:id="@+id/btn_close"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:background="@drawable/selector_rounded_main_blue100"
+            android:text="@string/label_close"
+            android:textAppearance="@style/TextAppearance.Content.Default.Inverse" />
+
+    </LinearLayout>
 
 </LinearLayout>

@@ -43,4 +43,8 @@
     <string name="label_sync">Dropbox 동기화</string>
     <string name="label_trigger">트리거 설정</string>
     <string name="label_capture">촬영</string>
+    <string name="label_close">닫기</string>
+    <string name="label_on_capturehelper">캡처도우미 켜기</string>
+    <string name="label_on">ON</string>
+    <string name="msg_empty_album">생성된 앨범이 없습니다. 앨범생성 후 실행해주세요.</string>
 </resources>

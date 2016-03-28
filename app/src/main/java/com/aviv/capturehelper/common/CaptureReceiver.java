@@ -3,10 +3,6 @@ package com.aviv.capturehelper.common;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.ServiceConnection;
-import android.net.Uri;
-import android.util.Log;
-import android.widget.Toast;
 
 import com.orhanobut.logger.Logger;
 
@@ -16,6 +12,8 @@ import com.orhanobut.logger.Logger;
 public class CaptureReceiver extends BroadcastReceiver {
 
     public static final String ACTION_RESTART_PERSISTENTSERVICE = "Action.Restart.Persistent";
+    public static final String ACTION_ON_FLOATING = "Action.On.CaptureFloating";
+
 
 
     public CaptureReceiver() {
@@ -33,6 +31,12 @@ public class CaptureReceiver extends BroadcastReceiver {
         {
             Intent i = new Intent(context, CaptureService.class);
             context.startService(i);
+        }
+        else if(intent.getAction().equals(ACTION_ON_FLOATING))
+        {
+            Intent i = new Intent(context, CaptureFloating.class);
+            context.startService(i);
+            Logger.d("OnFloating");
         }
     }
 }

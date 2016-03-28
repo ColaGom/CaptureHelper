@@ -9,4 +9,6 @@ public class Const {
     public static final String EXTRA_SERIALIZE_ALBUM = "extra.file.path";
 
     public static final String DEFULAT_SAVE_FOLDER = "aviv_capture";
+    public static final String DEFULAT_SAVE_PREFIX = "Screenshot";
+    public static final String DEFULAT_SAVE_SUFFIX = "yyyy-MM-dd-hh:mm:ss";
 }

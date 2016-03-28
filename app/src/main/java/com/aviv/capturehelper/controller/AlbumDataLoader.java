@@ -46,7 +46,7 @@ public class AlbumDataLoader extends Loader<AlbumData> {
 
     @Override
     public List<AlbumData> getAll() {
-        if(mLoadedList.size() == 0) {
+        if(mLoadedList.size() == 0 && getDao().count() > 0) {
             mLoadedList = getDao().loadAll();
         }
 
@@ -77,7 +77,6 @@ public class AlbumDataLoader extends Loader<AlbumData> {
     private Iterator snapshotIterator(Collection collection) {
 
         return new ArrayList(collection).iterator();
-
     }
 
     @Override
