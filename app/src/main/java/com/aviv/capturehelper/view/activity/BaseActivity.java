@@ -2,8 +2,10 @@ package com.aviv.capturehelper.view.activity;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
+import com.aviv.capturehelper.R;
 import com.aviv.capturehelper.common.Const;
 import com.aviv.capturehelper.model.dao.AlbumData;
 import com.orhanobut.logger.Logger;
@@ -24,11 +26,25 @@ public class BaseActivity extends AppCompatActivity {
 
     }
 
+    protected  void startSettingActivity()
+    {
+        Intent i = new Intent(this, SettingActivity.class);
+        startActivity(i);
+    }
+
     protected  void startAlbumActivity(AlbumData albumData)
     {
         Intent i = new Intent(this, AlbumActivity.class);
         i.putExtra(Const.EXTRA_SERIALIZE_ALBUM, albumData);
         startActivityForResult(i, REQUEST_ALBUM);
+    }
+
+    protected void setToolbar(int titleRes)
+    {
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle(getString(titleRes));
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     protected  void startCreateAlbumActivity()

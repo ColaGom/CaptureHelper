@@ -37,6 +37,7 @@ public class CaptureService extends Service implements ICaptureListener {
         new Timer().scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
+                Logger.e("In Timer");
                 if(mObserver == null)
                 {
                     Logger.e("Observer is null");
@@ -45,7 +46,7 @@ public class CaptureService extends Service implements ICaptureListener {
             }
         }, 1000, TIME_PREIOD);
     }
-
+    
     @Override
     public void onDestroy() {
         super.onDestroy();

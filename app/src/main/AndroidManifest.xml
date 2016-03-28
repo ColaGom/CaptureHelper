@@ -4,6 +4,7 @@
 
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
 
     <application
         android:name=".common.GlobalApplication"
@@ -51,6 +52,12 @@
         <activity
             android:name=".view.activity.AlbumActivity"
             android:launchMode="singleTop"/>
+
+        <activity
+            android:name=".view.activity.SettingActivity"
+            android:launchMode="singleTop"/>
+
+        <service android:name=".common.CaptureFloating"/>
     </application>
 
 </manifest>

@@ -1,5 +1,6 @@
 package com.aviv.capturehelper.common;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapShader;
 import android.graphics.Canvas;
@@ -14,6 +15,14 @@ import java.io.FileFilter;
  * Created by Counter on 2016-03-11.
  */
 public class Util {
+
+    public static float pxToDp(final Context context, final float px) {
+        return px / context.getResources().getDisplayMetrics().density;
+    }
+
+    public static float dpToPx(final Context context, final float dp) {
+        return dp * context.getResources().getDisplayMetrics().density;
+    }
 
     private static final String[] okFileExtensions = new String[] {"jpg", "jpeg","png"};
 

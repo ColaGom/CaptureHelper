@@ -36,4 +36,11 @@
     <string name="title_delete_album">앨범 삭제</string>
     <string name="msg_selected_album_prefix">선택 앨범 :</string>
     <string name="label_setting">설정</string>
+    <string name="title_activity_setting">설정</string>
+    <string name="label_common">일반</string>
+    <string name="label_app_share">이 앱 공유하기</string>
+    <string name="label_lock">잠금설정</string>
+    <string name="label_sync">Dropbox 동기화</string>
+    <string name="label_trigger">트리거 설정</string>
+    <string name="label_capture">촬영</string>
 </resources>

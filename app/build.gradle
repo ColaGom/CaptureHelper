@@ -28,4 +28,5 @@ dependencies {
     compile 'com.jakewharton:butterknife:7.0.1'
     compile 'de.greenrobot:greendao:2.1.0'
     compile 'com.android.support:design:23.2.1'
+    compile "cn.aigestudio.wheelpicker:WheelPicker:1.0.3"
 }

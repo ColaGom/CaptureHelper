@@ -1,5 +1,6 @@
 package com.aviv.capturehelper.view.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -23,6 +24,7 @@ import com.aviv.capturehelper.controller.Master;
 import com.aviv.capturehelper.model.dao.AlbumData;
 import com.aviv.capturehelper.model.wrapper.WrapAlbumData;
 import com.aviv.capturehelper.model.wrapper.WrapHelper;
+import com.aviv.capturehelper.common.CaptureFloating;
 import com.aviv.capturehelper.view.adapter.AdapterGridAlbum;
 import com.aviv.capturehelper.view.dialog.CustomDialog;
 
@@ -146,7 +148,8 @@ public class MainActivity extends BaseActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_setting) {
-
+           // startSettingActivity();
+            startService(new Intent(this, CaptureFloating.class));
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
