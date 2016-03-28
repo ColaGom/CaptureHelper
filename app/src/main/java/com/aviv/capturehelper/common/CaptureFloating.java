@@ -2,6 +2,7 @@ package com.aviv.capturehelper.common;
 
 import android.app.Service;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.PixelFormat;
@@ -23,14 +24,18 @@ import com.aviv.capturehelper.R;
 import com.aviv.capturehelper.controller.AlbumDataLoader;
 import com.aviv.capturehelper.controller.Master;
 import com.aviv.capturehelper.model.dao.AlbumData;
+import com.aviv.capturehelper.view.activity.ScreenShotActivity;
+import com.orhanobut.logger.Logger;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by Colabear on 2016-03-27.
  */
-public class CaptureFloating extends Service {
+
+public class CaptureFloating extends Service implements ScreenShotBinder {
 
     private WindowManager mWindowManager;
     private View mFloatingVIew;
@@ -112,7 +117,7 @@ public class CaptureFloating extends Service {
         mFloatingVIew.findViewById(R.id.btn_capture).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                capture();
             }
         });
 
@@ -157,8 +162,66 @@ public class CaptureFloating extends Service {
 
     private void capture()
     {
-
+        Intent intent = new Intent(this , ScreenShotActivity.class);
+        startActivity(intent);
+//        UserPrefLoader loader = Master.getInstance().getUserPrefLoader();
+//   ///     String fileName = loader.getSaveFileName();
+//     //   AlbumData albumData = getSelectedAlbum();
+//
+//    //    try
+//    //    {
+//       //     View screenView = new View(this);
+//         //   screenView.setBackgroundDrawable(getResources().getDrawable(R.drawable.outline_main_4));
+//
+//        //    mWindowManager.addView(screenView, fullscreenParams);
+//
+//            //Bitmap bitmap = loadBitmapFromView(screenView);
+//
+//           // screenView.addOn
+////            mFloatingVIew.setVisibility(View.GONE);
+////            screenView.setDrawingCacheEnabled(true);
+////            screenView.measure(View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.EXACTLY),
+////                    View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.EXACTLY));
+////            screenView.layout(0, 0, screenView.getMeasuredWidth(), screenView.getMeasuredHeight());
+////            screenView.buildDrawingCache();
+////
+////            Bitmap bitmap = Bitmap.createBitmap(screenView.getDrawingCache());
+////            screenView.setDrawingCacheEnabled(false);
+////            mFloatingVIew.setVisibility(View.VISIBLE);
+////
+////
+////            File imageFile = new File(albumData.getPath(), fileName);
+////            FileOutputStream outputStream = new FileOutputStream(imageFile);
+////            int quality = 100;
+////            bitmap.compress(Bitmap.CompressFormat.JPEG, quality, outputStream);
+////            outputStream.flush();
+////            outputStream.close();
+//
+//            Toast.makeText(this, getString(R.string.msg_success_save), Toast.LENGTH_SHORT).show();
+//        }catch (Exception e)
+//        {
+//            e.printStackTrace();
+//        }
     }
+
+
+    private Bitmap loadBitmapFromView(View v)
+    {
+        Bitmap bitmap = Bitmap.createBitmap(v.getMeasuredWidth(), v.getMeasuredHeight(), Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(bitmap);
+        v.draw(canvas);
+        return bitmap;
+    }
+
+    private WindowManager.LayoutParams fullscreenParams = new WindowManager.LayoutParams(
+            WindowManager.LayoutParams.MATCH_PARENT,
+            WindowManager.LayoutParams.MATCH_PARENT,
+            WindowManager.LayoutParams.TYPE_SYSTEM_ALERT,
+            WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
+                    | WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL | WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN
+                    | WindowManager.LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH,
+            PixelFormat.TRANSLUCENT);
+
 
     private void stopFloating() {
         mWindowManager.removeView(mFloatingVIew);
@@ -176,4 +239,17 @@ public class CaptureFloating extends Service {
 
         return result;
     }
+
+    @Override
+    public void onCapture(boolean success) {
+        Logger.d("onCapture");
+    }
+
+    @Override
+    public File getImageFile() {
+        UserPrefLoader loader = Master.getInstance().getUserPrefLoader();
+        return new File(getSelectedAlbum().getPath(), loader.getSaveFileName());
+    }
+
 }
+

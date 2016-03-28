@@ -38,9 +38,30 @@ public class UserPrefLoader {
         return mPrefer.getString(KEY_SAVE_PREFIX, Const.DEFULAT_SAVE_PREFIX);
     }
 
+
+    public void setSavePrefix(String prefix)
+    {
+        SharedPreferences.Editor editor = mPrefer.edit();
+        editor.putString(KEY_SAVE_PREFIX, prefix);
+        editor.commit();
+    }
+
+
     private final  String KEY_SAVE_SUFFIX = "key.save.suffix";
     public String getSaveSuffix()
     {
         return mPrefer.getString(KEY_SAVE_SUFFIX, Const.DEFULAT_SAVE_SUFFIX);
+    }
+
+    public void setSaveSuffix(String suffix)
+    {
+        SharedPreferences.Editor editor = mPrefer.edit();
+        editor.putString(KEY_SAVE_SUFFIX, suffix);
+        editor.commit();
+    }
+
+    public String getSaveFileName()
+    {
+        return String.format("%s_%s.jpg",getSavePrefix(), getSaveSuffix());
     }
 }
