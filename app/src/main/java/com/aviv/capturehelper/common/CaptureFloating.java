@@ -163,6 +163,10 @@ public class CaptureFloating extends Service implements ScreenShotBinder {
     private void capture()
     {
         Intent intent = new Intent(this , ScreenShotActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        String path = getSelectedAlbum().getPath() + File.separator + Master.getInstance().getUserPrefLoader().getSaveFileName();
+        Logger.d(path);
+        intent.putExtra(Const.EXTRA_FILE_PATH, path);
         startActivity(intent);
 //        UserPrefLoader loader = Master.getInstance().getUserPrefLoader();
 //   ///     String fileName = loader.getSaveFileName();

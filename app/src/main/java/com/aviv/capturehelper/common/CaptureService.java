@@ -40,7 +40,10 @@ public class CaptureService extends Service implements ICaptureListener {
     @Override
     public void onCreate() {
         super.onCreate();
-        createNotification();
+
+        //Disable Notification...
+        //createNotification();
+
         unregisterRestartAlarm();
         monitorAllFiles(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES));
         new Timer().scheduleAtFixedRate(new TimerTask() {

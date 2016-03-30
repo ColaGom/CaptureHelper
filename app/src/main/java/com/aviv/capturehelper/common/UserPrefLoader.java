@@ -3,6 +3,8 @@ package com.aviv.capturehelper.common;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import java.text.SimpleDateFormat;
+
 /**
  * Created by Colabear on 2016-03-24.
  */
@@ -62,6 +64,6 @@ public class UserPrefLoader {
 
     public String getSaveFileName()
     {
-        return String.format("%s_%s.jpg",getSavePrefix(), getSaveSuffix());
+        return String.format("%s_%s.jpg",getSavePrefix(), Util.getNowDateString(new SimpleDateFormat(getSaveSuffix())));
     }
 }
