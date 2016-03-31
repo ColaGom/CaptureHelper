@@ -1,13 +1,13 @@
 package com.aviv.capturehelper.view.activity;
 
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
 
 import com.aviv.capturehelper.R;
 import com.aviv.capturehelper.common.Const;
+import com.aviv.capturehelper.common.Dialoger;
 import com.aviv.capturehelper.common.Util;
 import com.aviv.capturehelper.controller.ActivityStarter;
 import com.aviv.capturehelper.model.dao.AlbumData;
@@ -26,8 +26,9 @@ public class AlbumActivity extends BaseActivity implements AdapterView.OnItemCli
     @Bind(R.id.gv_album)
     GridView mGvAlbum;
 
-    @Bind(R.id.btn_modify)
-    View mBtnModify;
+    @Bind(R.id.btn_delete)
+    View mBtnDelete;
+
 
     @Bind(R.id.btn_move)
     View mBtnMove;
@@ -46,10 +47,7 @@ public class AlbumActivity extends BaseActivity implements AdapterView.OnItemCli
 
         ButterKnife.bind(this);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle(mAlbum.getName());
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        setToolbar(mAlbum.getName());
 
         mListFile = Arrays.asList(Util.getListOfImageFiles(mAlbum.getPath()));
         mAdapter = new AdapterImage(this, R.layout.row_image, mListFile);
@@ -62,15 +60,15 @@ public class AlbumActivity extends BaseActivity implements AdapterView.OnItemCli
 
     private void setComponents() {
         if (mAdapter.getSelectedCount() > 0) {
-            mBtnModify.setVisibility(View.VISIBLE);
+            mBtnDelete.setVisibility(View.VISIBLE);
             mBtnMove.setVisibility(View.VISIBLE);
         } else {
-            mBtnModify.setVisibility(View.GONE);
+            mBtnDelete.setVisibility(View.GONE);
             mBtnMove.setVisibility(View.GONE);
         }
     }
 
-    @OnClick({R.id.btn_select_all, R.id.btn_deselect_all, R.id.btn_modify, R.id.btn_move})
+    @OnClick({R.id.btn_select_all, R.id.btn_deselect_all, R.id.btn_delete, R.id.btn_move})
     void onClick(View view) {
         int id = view.getId();
 
@@ -85,7 +83,18 @@ public class AlbumActivity extends BaseActivity implements AdapterView.OnItemCli
                 setComponents();
                 break;
 
-            case R.id.btn_modify:
+            case R.id.btn_delete:
+                Dialoger.showAlertDialog(this, getString(R.string.title_image_delete), getString(R.string.msg_album_delete), new Dialoger.AlertListener() {
+                    @Override
+                    public void onClickYes() {
+
+                    }
+
+                    @Override
+                    public void onClickNo() {
+
+                    }
+                });
                 break;
 
             case R.id.btn_move:

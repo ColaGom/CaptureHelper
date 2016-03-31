@@ -37,7 +37,7 @@
             </FrameLayout>
 
             <FrameLayout
-                android:id="@+id/btn_modify"
+                android:id="@+id/btn_delete"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:background="@drawable/selector_main_blue100"
@@ -47,7 +47,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="right|center_vertical"
-                    android:text="@string/label_modify"
+                    android:text="@string/label_delete"
                     android:textColor="@android:color/white"
                     android:textSize="@dimen/size_font_normal" />
             </FrameLayout>

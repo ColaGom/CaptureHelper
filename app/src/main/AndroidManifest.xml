@@ -50,7 +50,7 @@
 
         <activity
             android:name=".view.activity.LockActivity"
-            android:launchMode="singleTop" />
+            android:launchMode="singleInstance" />
 
         <activity android:name=".view.activity.ImageViewActivity" />
 

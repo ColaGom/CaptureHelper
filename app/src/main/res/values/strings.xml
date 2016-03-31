@@ -71,4 +71,7 @@
     <string name="label_move">이동</string>
     <string name="label_select_all">전체선택</string>
     <string name="label_deselect_all">전체선택 해제</string>
+    <string name="msg_album_delete">선택된 사진을 삭제하시겠습니까?</string>
+    <string name="title_image_delete">삭제</string>
+    <string name="title_image_move">이동</string>
 </resources>
