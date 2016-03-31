@@ -51,17 +51,16 @@ public class LockActivity extends BaseActivity {
         mPatternView.setOnPatternListener(new PatternView.OnPatternListener() {
             @Override
             public void onPatternStart() {
-                Log.d(Const.TAG, "onPatternStart");
+
             }
 
             @Override
             public void onPatternCleared() {
-                Log.d(Const.TAG, "onPatternCleared");
+
             }
 
             @Override
             public void onPatternCellAdded(List<PatternView.Cell> pattern) {
-                Log.d(Const.TAG, "onPatternCellAdded");
             }
 
             @Override

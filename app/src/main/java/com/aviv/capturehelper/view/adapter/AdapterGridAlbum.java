@@ -82,7 +82,6 @@ public class AdapterGridAlbum extends ArrayAdapter<WrapAlbumData> {
             view.setTag(this);
         }
 
-
         public void setView(WrapAlbumData data)
         {
             if(!data.isEmpty())

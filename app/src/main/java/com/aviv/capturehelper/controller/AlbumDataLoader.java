@@ -81,8 +81,9 @@ public class AlbumDataLoader extends Loader<AlbumData> {
 
     @Override
     public void insert(AlbumData data) {
-        mLoadedList.add(data);
-        getDao().insert(data);
+        if(!mLoadedList.contains(data))
+            mLoadedList.add(data);
+        getDao().insertOrReplace(data);
     }
 
     @Override

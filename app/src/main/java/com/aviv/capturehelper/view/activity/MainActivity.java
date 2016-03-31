@@ -218,8 +218,14 @@ public class MainActivity extends BaseActivity
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         WrapAlbumData albumData = (WrapAlbumData) parent.getItemAtPosition(position);
 
-        if (!albumData.isEmpty())
-            startAlbumActivity(albumData.getValue());
+        if (!albumData.isEmpty()) {
+            AlbumData value = albumData.getValue();
+            if(value.getIsnew()) {
+                value.setIsnew(false);
+                Master.getInstance().getAlbumDataLoader().insert(value);
+            }
+            startAlbumActivity(value);
+        }
     }
 
     private View.OnClickListener getDeleteListener(WrapAlbumData data) {
@@ -261,7 +267,6 @@ public class MainActivity extends BaseActivity
 
     @Override
     public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-
         WrapAlbumData albumData = (WrapAlbumData) parent.getItemAtPosition(position);
 
         if (mDialog == null) {

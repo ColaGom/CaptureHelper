@@ -130,6 +130,8 @@ public class AlbumPopupActivity extends BaseActivity implements AdapterView.OnIt
             Dialoger.showAlertDialog(this, getString(R.string.title_selected_album), message, new Dialoger.AlertListener() {
                 @Override
                 public void onClickYes() {
+                    albumData.getValue().setIsnew(true);
+                    Master.getInstance().getAlbumDataLoader().insert(albumData.getValue());
                     Util.moveFile(albumData, mPath);
                     Toast.makeText(AlbumPopupActivity.this, getString(R.string.msg_saved), Toast.LENGTH_SHORT).show();
                     finish();
