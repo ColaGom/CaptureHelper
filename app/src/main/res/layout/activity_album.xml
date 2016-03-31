@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
@@ -13,33 +13,87 @@
         app:theme="@style/AppTheme.Toolbar"
         app:titleTextAppearance="@style/AppTheme.Toolbar.Title">
 
-        <FrameLayout
-            android:id="@+id/btn_modify"
-            android:layout_width="100dp"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_gravity="right"
-            android:padding="@dimen/default_padding"
-            android:background="@drawable/selector_main_blue100">
+            android:gravity="right"
+            android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/tv_right"
+            <FrameLayout
+                android:id="@+id/btn_move"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="right|center_vertical"
-                android:text="@string/label_modify"
-                android:textColor="@android:color/white"
-                android:textSize="@dimen/size_font_normal" />
-        </FrameLayout>
+                android:layout_height="match_parent"
+                android:background="@drawable/selector_main_blue100"
+                android:padding="@dimen/default_padding">
 
+                <TextView
+                    android:id="@+id/tv_right"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right|center_vertical"
+                    android:text="@string/label_move"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/size_font_normal" />
+            </FrameLayout>
+
+            <FrameLayout
+                android:id="@+id/btn_modify"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="@drawable/selector_main_blue100"
+                android:padding="@dimen/default_padding">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right|center_vertical"
+                    android:text="@string/label_modify"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/size_font_normal" />
+            </FrameLayout>
+
+        </LinearLayout>
     </android.support.v7.widget.Toolbar>
 
     <GridView
-        android:layout_below="@id/toolbar"
         android:id="@+id/gv_album"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@id/toolbar"
         android:horizontalSpacing="2dp"
-        android:verticalSpacing="2dp"
-        android:numColumns="3"/>
+        android:numColumns="3"
+        android:verticalSpacing="2dp" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:orientation="horizontal"
+        android:layout_margin="@dimen/nav_margin">
+
+        <TextView
+            android:id="@+id/btn_select_all"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/default_padding"
+            android:background="@drawable/selector_rounded_main_blue100"
+            android:padding="@dimen/default_padding"
+            android:singleLine="true"
+            android:text="@string/label_select_all"
+            android:textColor="@android:color/white" />
+
+        <TextView
+            android:id="@+id/btn_deselect_all"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/default_padding"
+            android:background="@drawable/selector_rounded_main_blue100"
+            android:padding="@dimen/default_padding"
+            android:singleLine="true"
+            android:text="@string/label_deselect_all"
+            android:textColor="@android:color/white" />
+
+    </LinearLayout>
 
 </RelativeLayout>

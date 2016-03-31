@@ -42,8 +42,13 @@ public class BaseActivity extends AppCompatActivity {
 
     protected void setToolbar(int titleRes)
     {
+        setToolbar(getString(titleRes));
+    }
+
+    protected void setToolbar(String title)
+    {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle(getString(titleRes));
+        toolbar.setTitle(title);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }

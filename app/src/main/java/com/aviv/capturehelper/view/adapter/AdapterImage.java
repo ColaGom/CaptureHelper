@@ -50,6 +50,7 @@ public class AdapterImage extends ArrayAdapter<File> {
 
     public void selectAll()
     {
+        mSelectedList.clear();
         mSelectedList.addAll(mObjects);
         notifyDataSetChanged();
     }

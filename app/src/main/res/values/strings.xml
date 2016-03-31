@@ -67,4 +67,8 @@
     <string name="label_invalid_pattern">입력된 패턴이 너무 짧습니다.</string>
     <string name="label_missmacth_pattern">입력하신 패턴이 옳바르지 않습니다.</string>
     <string name="label_clear_lock">잠금 설정 해제 완료</string>
+    <string name="title_activity_imageview">사진보기</string>
+    <string name="label_move">이동</string>
+    <string name="label_select_all">전체선택</string>
+    <string name="label_deselect_all">전체선택 해제</string>
 </resources>

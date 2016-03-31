@@ -7,12 +7,32 @@ import android.net.Uri;
 
 import com.aviv.capturehelper.R;
 import com.aviv.capturehelper.common.Const;
+import com.aviv.capturehelper.view.activity.ImageViewActivity;
 import com.aviv.capturehelper.view.activity.LockActivity;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Colabear on 2016-03-31.
  */
 public class ActivityStarter {
+
+    public static void startImageViewActivity(Context context, List<File> imageList,int startIdx)
+    {
+        Intent intent = new Intent(context, ImageViewActivity.class);
+        ArrayList<String> arrStr = new ArrayList<String>();
+
+        for(File f:imageList)
+        {
+            arrStr.add(f.getPath());
+        }
+
+        intent.putExtra(Const.EXTRA_ARRAY_STRING, arrStr);
+        intent.putExtra(Const.EXTRA_START_INDEX, startIdx);
+        context.startActivity(intent);
+    }
 
     public static void startStoreIntent(Context context){
         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(Const.APP_URL_FOR_MARKET));

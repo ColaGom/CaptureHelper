@@ -11,6 +11,8 @@ public class Const {
     public static final String EXTRA_FILE_PATH = "extra.file.path";
     public static final String EXTRA_SERIALIZE_ALBUM = "extra.file.path";
     public static final String EXTRA_TYPE = "extra.type";
+    public static final String EXTRA_ARRAY_STRING = "extra.array.string";
+    public static final String EXTRA_START_INDEX = "extra.start.index";
 
     public static final String DEFULAT_SAVE_FOLDER = "aviv_capture";
     public static final String DEFULAT_SAVE_PREFIX = "Screenshot";

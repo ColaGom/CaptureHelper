@@ -44,20 +44,20 @@
             android:name=".view.activity.AlbumPopupActivity"
             android:launchMode="singleTop"
             android:theme="@style/Theme.AppCompat.Translucent" />
-        <activity
-            android:name=".view.activity.AlbumActivity"
-            android:launchMode="singleTop" />
-        <activity
-            android:name=".view.activity.SettingActivity"
-            android:launchMode="singleTop" />
+
+        <activity android:name=".view.activity.AlbumActivity" />
+        <activity android:name=".view.activity.SettingActivity" />
 
         <activity
             android:name=".view.activity.LockActivity"
             android:launchMode="singleTop" />
 
+        <activity android:name=".view.activity.ImageViewActivity" />
+
         <service android:name=".common.CaptureFloating" />
 
-        <activity android:name=".view.activity.ScreenShotActivity"
+        <activity
+            android:name=".view.activity.ScreenShotActivity"
             android:theme="@style/Theme.AppCompat.Translucent"></activity>
     </application>
 
