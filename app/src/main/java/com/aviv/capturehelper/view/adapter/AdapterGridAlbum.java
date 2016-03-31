@@ -64,6 +64,8 @@ public class AdapterGridAlbum extends ArrayAdapter<WrapAlbumData> {
         TextView tvTitle;
         @Bind(R.id.tv_count)
         TextView tvCount;
+        @Bind(R.id.v_new)
+        View vNew;
 
         @BindString(R.string.label_prefix_count)
         String mPrefixCount;
@@ -92,7 +94,11 @@ public class AdapterGridAlbum extends ArrayAdapter<WrapAlbumData> {
                 File directory = new File(albumData.getPath());
                 File[] files = Util.getListOfImageFiles(albumData.getPath());
 
-                if(files.length > 0) {
+                if(albumData.getIsnew() != null && albumData.getIsnew()) vNew.setVisibility(View.VISIBLE);
+                else vNew.setVisibility(View.GONE);
+
+                if(files.length > 0)
+                {
                     Glide.with(mContext).load(directory.listFiles()[0]).centerCrop().crossFade().into(ivImage);
                     tvCount.setText(mPrefixCount + " " + files.length + mSuffixCount);
                 }else{

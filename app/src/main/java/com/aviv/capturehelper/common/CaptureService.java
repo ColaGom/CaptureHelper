@@ -66,7 +66,6 @@ public class CaptureService extends Service implements ICaptureListener {
 
     @Override
     public void onCapture(String path) {
-        Logger.i("[onCapture]" + path);
         Intent intent = new Intent(this, AlbumPopupActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.putExtra(Const.EXTRA_FILE_PATH, path);
@@ -74,7 +73,6 @@ public class CaptureService extends Service implements ICaptureListener {
     }
 
     public void registerRestartAlarm() {
-        Logger.d(Const.TAG, "registerRestartAlarm");
         Intent intent = new Intent(CaptureService.this, CaptureReceiver.class);
         intent.setAction(CaptureReceiver.ACTION_RESTART_PERSISTENTSERVICE);
         PendingIntent sender = PendingIntent.getBroadcast(this, 0, intent, 0);
@@ -85,7 +83,6 @@ public class CaptureService extends Service implements ICaptureListener {
     }
 
     public void unregisterRestartAlarm() {
-        Logger.d(Const.TAG, "unregisterRestartAlarm");
         Intent intent = new Intent(CaptureService.this, CaptureReceiver.class);
         intent.setAction(CaptureReceiver.ACTION_RESTART_PERSISTENTSERVICE);
         PendingIntent sender = PendingIntent.getBroadcast(this, 0, intent, 0);

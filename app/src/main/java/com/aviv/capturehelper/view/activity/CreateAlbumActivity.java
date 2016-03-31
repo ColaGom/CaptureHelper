@@ -70,6 +70,8 @@ public class CreateAlbumActivity extends BaseActivity {
         albumData.setDate(new java.util.Date());
         albumData.setName(mEtInput.getText().toString());
         albumData.setPath(path);
+        albumData.setIsnew(false);
+        albumData.setIsfavorite(false);
 
         Master.getInstance().getAlbumDataLoader().insert(albumData);
     }

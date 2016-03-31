@@ -32,10 +32,31 @@
                 style="@style/setting_menu_content"
                 android:text="@string/label_app_share" />
 
-            <TextView
-                android:id="@+id/btn_lock"
+            <LinearLayout
                 style="@style/setting_menu_content"
-                android:text="@string/label_lock" />
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:text="@string/label_lock"
+                    android:textAppearance="@style/TextAppearance.Content.Default.Inverse" />
+
+                <android.support.v7.widget.SwitchCompat
+                    android:id="@+id/sc_lock"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/btn_version"
+                style="@style/setting_menu_content"
+                android:text="@string/label_check_version" />
 
             <TextView
                 style="@style/setting_menu_title"

@@ -9,6 +9,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.SwitchCompat;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -52,6 +53,10 @@ public class MainActivity extends BaseActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        if(!TextUtils.isEmpty(Master.getInstance().getUserPrefLoader().getLockPattern())){
+            startLockValidActivity();
+        }
+
         ButterKnife.bind(this);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -84,7 +89,6 @@ public class MainActivity extends BaseActivity
         };
         drawer.setDrawerListener(toggle);
         toggle.syncState();
-
         setNavigationView();
     }
 

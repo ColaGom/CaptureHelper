@@ -13,6 +13,8 @@ public class AlbumData implements Serializable {
     private String name;
     private String path;
     private java.util.Date date;
+    private Boolean isnew;
+    private Boolean isfavorite;
     private String jsonobject;
 
     public AlbumData() {
@@ -22,11 +24,13 @@ public class AlbumData implements Serializable {
         this.id = id;
     }
 
-    public AlbumData(Long id, String name, String path, java.util.Date date, String jsonobject) {
+    public AlbumData(Long id, String name, String path, java.util.Date date, Boolean isnew, Boolean isfavorite, String jsonobject) {
         this.id = id;
         this.name = name;
         this.path = path;
         this.date = date;
+        this.isnew = isnew;
+        this.isfavorite = isfavorite;
         this.jsonobject = jsonobject;
     }
 
@@ -60,6 +64,22 @@ public class AlbumData implements Serializable {
 
     public void setDate(java.util.Date date) {
         this.date = date;
+    }
+
+    public Boolean getIsnew() {
+        return isnew;
+    }
+
+    public void setIsnew(Boolean isnew) {
+        this.isnew = isnew;
+    }
+
+    public Boolean getIsfavorite() {
+        return isfavorite;
+    }
+
+    public void setIsfavorite(Boolean isfavorite) {
+        this.isfavorite = isfavorite;
     }
 
     public String getJsonobject() {

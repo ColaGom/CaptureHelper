@@ -51,6 +51,10 @@
             android:name=".view.activity.SettingActivity"
             android:launchMode="singleTop" />
 
+        <activity
+            android:name=".view.activity.LockActivity"
+            android:launchMode="singleTop" />
+
         <service android:name=".common.CaptureFloating" />
 
         <activity android:name=".view.activity.ScreenShotActivity"

@@ -6,7 +6,7 @@ android {
 
     defaultConfig {
         applicationId "com.aviv.capturehelper"
-        minSdkVersion 11
+        minSdkVersion 14
         targetSdkVersion 19
         versionCode 1
         versionName "1.0"
@@ -29,4 +29,5 @@ dependencies {
     compile 'de.greenrobot:greendao:2.1.0'
     compile 'com.android.support:design:23.2.1'
     compile "cn.aigestudio.wheelpicker:WheelPicker:1.0.3"
+    compile 'me.zhanghai.android.patternlock:library:2.0.2'
 }

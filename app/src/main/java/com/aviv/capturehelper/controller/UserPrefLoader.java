@@ -97,4 +97,17 @@ public class UserPrefLoader {
         editor.putBoolean(KEY_ENABLE_HELPER, enable);
         editor.commit();
     }
+
+    private final String KEY_LOCK_PATTERN = "key.lock.pattern";
+    public String getLockPattern()
+    {
+        return mPrefer.getString(KEY_LOCK_PATTERN, "");
+    }
+
+    public void putLockPattern(String pattern)
+    {
+        SharedPreferences.Editor editor = mPrefer.edit();
+        editor.putString(KEY_LOCK_PATTERN, pattern);
+        editor.commit();
+    }
 }

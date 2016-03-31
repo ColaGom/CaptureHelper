@@ -15,15 +15,12 @@ public class Master {
     }
 
     private AlbumDataLoader mAlbumDataLoader;
-    private ImageDataLoader mImageDataLoader;
     private UserPrefLoader mUserPrefLoader;
 
     public void init(Context context)
     {
         mAlbumDataLoader = new AlbumDataLoader();
         mAlbumDataLoader.init(context);
-        mImageDataLoader = new ImageDataLoader();
-        mImageDataLoader.init(context);
         mUserPrefLoader = new UserPrefLoader();
         mUserPrefLoader.init(context);
     }
@@ -33,10 +30,6 @@ public class Master {
         return mAlbumDataLoader;
     }
 
-    public ImageDataLoader getImageDataLoader()
-    {
-        return mImageDataLoader;
-    }
     public UserPrefLoader getUserPrefLoader()
     {
         return mUserPrefLoader;

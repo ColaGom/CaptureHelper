@@ -4,6 +4,7 @@
     <color name="main_color">#47A1D9</color>
     <color name="blue_200">#90CAF9</color>
     <color name="blue_100">#BBDEFB</color>
+    <color name="warnning">#fff4511e</color>
     <!--
         Check Android Theme colors for color reference:
         https://developer.android.com/training/material/images/ThemeColors.png

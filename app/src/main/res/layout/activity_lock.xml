@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        app:theme="@style/AppTheme.Toolbar"
+        app:titleTextAppearance="@style/AppTheme.Toolbar.Title" />
+
+    <TextView
+        android:id="@+id/tv_warnning"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_below="@id/toolbar"
+        android:gravity="center"
+        android:text="@string/label_title_notice_lock"
+        android:textColor="@color/warnning"
+        android:textSize="@dimen/size_font_normal" />
+
+    <me.zhanghai.android.patternlock.PatternView
+        android:id="@+id/pv_password"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true" />
+
+    <Button
+        android:id="@+id/btn_lock_pattern"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/pv_password"
+        android:layout_centerHorizontal="true"
+        android:text="@string/label_complete"
+        android:visibility="gone" />
+
+</RelativeLayout>

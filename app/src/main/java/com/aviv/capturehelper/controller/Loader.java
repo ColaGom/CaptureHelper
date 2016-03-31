@@ -28,7 +28,6 @@ public abstract class Loader<T>  {
         SQLiteDatabase db = helper.getWritableDatabase();
         DaoMaster daoMaster = new DaoMaster(db);
         mSession = daoMaster.newSession();
-        mSession.getImageDataDao();
     }
 
     abstract AbstractDao<T,Long> getDao();

@@ -7,6 +7,7 @@ import android.view.MenuItem;
 
 import com.aviv.capturehelper.R;
 import com.aviv.capturehelper.common.Const;
+import com.aviv.capturehelper.controller.ActivityStarter;
 import com.aviv.capturehelper.model.dao.AlbumData;
 import com.orhanobut.logger.Logger;
 
@@ -47,10 +48,23 @@ public class BaseActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
+    protected void setToolbar(int titleRes, boolean displayHome)
+    {
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle(getString(titleRes));
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(displayHome);
+    }
+
     protected  void startCreateAlbumActivity()
     {
         Intent i = new Intent(this, CreateAlbumActivity.class);
         startActivityForResult(i, REQUEST_CREATE_ALBUM);
+    }
+
+    protected  void startLockValidActivity()
+    {
+        ActivityStarter.startLockActivity(this, LockActivity.TYPE_VALID);
     }
 
     @Override

@@ -56,4 +56,15 @@
     <string name="label_save_quality_50">50%</string>
     <string name="label_save_quality_origin">원본</string>
     <string name="label_save_folder">저장 폴더</string>
+    <string name="label_check_version">최신 버전 확인</string>
+    <string name="label_app_share_title">캡처 도우미</string>
+    <string name="label_app_share_desc">편리한 기능이 가득한 캡처 도우미앱으로 초대합니다.</string>
+    <string name="share_using">앱을 선택해주세요.</string>
+    <string name="label_complete">설정 완료</string>
+    <string name="label_title_notice_lock">주의:패턴 분실시 복구 불가능합니다.\\n 꼭 기억해주세요</string>
+    <string name="title_valid_lock">잠금 화면</string>
+    <string name="title_setting_lock">잠금 설정 화면</string>
+    <string name="label_invalid_pattern">입력된 패턴이 너무 짧습니다.</string>
+    <string name="label_missmacth_pattern">입력하신 패턴이 옳바르지 않습니다.</string>
+    <string name="label_clear_lock">잠금 설정 해제 완료</string>
 </resources>

@@ -27,7 +27,9 @@ public class AlbumDataDao extends AbstractDao<AlbumData, Long> {
         public final static Property Name = new Property(1, String.class, "name", false, "NAME");
         public final static Property Path = new Property(2, String.class, "path", false, "PATH");
         public final static Property Date = new Property(3, java.util.Date.class, "date", false, "DATE");
-        public final static Property Jsonobject = new Property(4, String.class, "jsonobject", false, "JSONOBJECT");
+        public final static Property Isnew = new Property(4, Boolean.class, "isnew", false, "ISNEW");
+        public final static Property Isfavorite = new Property(5, Boolean.class, "isfavorite", false, "ISFAVORITE");
+        public final static Property Jsonobject = new Property(6, String.class, "jsonobject", false, "JSONOBJECT");
     };
 
 
@@ -47,7 +49,9 @@ public class AlbumDataDao extends AbstractDao<AlbumData, Long> {
                 "\"NAME\" TEXT," + // 1: name
                 "\"PATH\" TEXT," + // 2: path
                 "\"DATE\" INTEGER," + // 3: date
-                "\"JSONOBJECT\" TEXT);"); // 4: jsonobject
+                "\"ISNEW\" INTEGER," + // 4: isnew
+                "\"ISFAVORITE\" INTEGER," + // 5: isfavorite
+                "\"JSONOBJECT\" TEXT);"); // 6: jsonobject
     }
 
     /** Drops the underlying database table. */
@@ -81,9 +85,19 @@ public class AlbumDataDao extends AbstractDao<AlbumData, Long> {
             stmt.bindLong(4, date.getTime());
         }
  
+        Boolean isnew = entity.getIsnew();
+        if (isnew != null) {
+            stmt.bindLong(5, isnew ? 1L: 0L);
+        }
+ 
+        Boolean isfavorite = entity.getIsfavorite();
+        if (isfavorite != null) {
+            stmt.bindLong(6, isfavorite ? 1L: 0L);
+        }
+ 
         String jsonobject = entity.getJsonobject();
         if (jsonobject != null) {
-            stmt.bindString(5, jsonobject);
+            stmt.bindString(7, jsonobject);
         }
     }
 
@@ -101,7 +115,9 @@ public class AlbumDataDao extends AbstractDao<AlbumData, Long> {
             cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1), // name
             cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // path
             cursor.isNull(offset + 3) ? null : new java.util.Date(cursor.getLong(offset + 3)), // date
-            cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4) // jsonobject
+            cursor.isNull(offset + 4) ? null : cursor.getShort(offset + 4) != 0, // isnew
+            cursor.isNull(offset + 5) ? null : cursor.getShort(offset + 5) != 0, // isfavorite
+            cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6) // jsonobject
         );
         return entity;
     }
@@ -113,7 +129,9 @@ public class AlbumDataDao extends AbstractDao<AlbumData, Long> {
         entity.setName(cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1));
         entity.setPath(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
         entity.setDate(cursor.isNull(offset + 3) ? null : new java.util.Date(cursor.getLong(offset + 3)));
-        entity.setJsonobject(cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4));
+        entity.setIsnew(cursor.isNull(offset + 4) ? null : cursor.getShort(offset + 4) != 0);
+        entity.setIsfavorite(cursor.isNull(offset + 5) ? null : cursor.getShort(offset + 5) != 0);
+        entity.setJsonobject(cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6));
      }
     
     /** @inheritdoc */
