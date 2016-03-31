@@ -24,50 +24,113 @@
             android:padding="@dimen/default_padding">
 
             <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/bottom_line_main_2"
-                android:padding="@dimen/default_padding"
-                android:text="@string/label_common"
-                android:textAppearance="@style/TextAppearance.Content.Title" />
+                style="@style/setting_menu_title"
+                android:text="@string/label_common" />
 
             <TextView
                 android:id="@+id/btn_app_share"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/bottom_line_gray_1"
-                android:padding="@dimen/default_padding"
-                android:text="@string/label_app_share"
-                android:textAppearance="@style/TextAppearance.Content.Default.Inverse" />
+                style="@style/setting_menu_content"
+                android:text="@string/label_app_share" />
 
             <TextView
                 android:id="@+id/btn_lock"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/bottom_line_gray_1"
-                android:padding="@dimen/default_padding"
-                android:text="@string/label_lock"
-                android:textAppearance="@style/TextAppearance.Content.Default.Inverse" />
+                style="@style/setting_menu_content"
+                android:text="@string/label_lock" />
 
             <TextView
-                android:id="@+id/btn_sync"
+                style="@style/setting_menu_title"
+                android:text="@string/label_function" />
+
+            <LinearLayout
+                style="@style/setting_menu_content"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/bottom_line_gray_1"
-                android:padding="@dimen/default_padding"
-                android:text="@string/label_sync"
-                android:textAppearance="@style/TextAppearance.Content.Default.Inverse" />
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:text="@string/label_save_quality"
+                    android:textAppearance="@style/TextAppearance.Content.Default.Inverse" />
+
+                <RadioGroup
+                    android:id="@+id/rg_quality"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/label_save_quality_50" />
+
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/label_save_quality_origin" />
+                </RadioGroup>
+
+            </LinearLayout>
+
+            <LinearLayout
+                style="@style/setting_menu_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:text="@string/label_save_folder"
+                    android:textAppearance="@style/TextAppearance.Content.Default.Inverse" />
+
+                <TextView
+                    android:id="@+id/tv_save_folder"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:ellipsize="marquee"
+                    android:gravity="right"
+                    android:singleLine="true"
+                    android:textColor="@color/tr_black" />
+
+                <Button
+                    android:id="@+id/btn_save_folder"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/default_padding"
+                    android:text="@string/label_setting" />
+
+            </LinearLayout>
 
             <TextView
+                style="@style/setting_menu_title"
+                android:text="@string/label_sync" />
+
+            <LinearLayout
+                style="@style/setting_menu_content"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/bottom_line_main_2"
-                android:padding="@dimen/default_padding"
-                android:text="@string/label_trigger"
-                android:textAppearance="@style/TextAppearance.Content.Title" />
+                android:orientation="horizontal">
 
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:text="@string/label_sync_dropbox"
+                    android:textAppearance="@style/TextAppearance.Content.Default.Inverse" />
+
+                <android.support.v7.widget.SwitchCompat
+                    android:id="@+id/sync_dropbox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
         </LinearLayout>
-
     </RelativeLayout>
-
 </ScrollView>

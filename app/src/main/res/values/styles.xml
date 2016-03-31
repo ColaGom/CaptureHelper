@@ -28,7 +28,7 @@
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
-    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" >
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light">
         <item name="android:textColorPrimary">@android:color/white</item>
     </style>
 
@@ -40,5 +40,31 @@
     <style name="Dialog.RaiseButton" parent="Theme.AppCompat.Light">
         <item name="colorControlHighlight">@color/blue_100</item>
         <item name="colorButtonNormal">@color/main_color</item>
+    </style>
+
+    <style name="nav_box">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">50dp</item>
+        <item name="android:layout_marginLeft">@dimen/nav_margin</item>
+        <item name="android:layout_marginRight">@dimen/nav_margin</item>
+        <item name="android:background">@drawable/bottom_line_gray_1</item>
+        <item name="android:orientation">horizontal</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="setting_menu_title">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:padding">@dimen/default_padding</item>
+        <item name="android:background">@drawable/bottom_line_main_2</item>
+        <item name="android:textAppearance">@style/TextAppearance.Content.Title</item>
+    </style>
+
+    <style name="setting_menu_content">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:padding">@dimen/default_padding</item>
+        <item name="android:background">@drawable/selector_bottom_line_gray1_gray</item>
+        <item name="android:textAppearance">@style/TextAppearance.Content.Default.Inverse</item>
     </style>
 </resources>

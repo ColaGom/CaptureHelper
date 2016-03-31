@@ -40,7 +40,7 @@
     <string name="label_common">일반</string>
     <string name="label_app_share">이 앱 공유하기</string>
     <string name="label_lock">잠금설정</string>
-    <string name="label_sync">Dropbox 동기화</string>
+    <string name="label_sync_dropbox">Dropbox 동기화</string>
     <string name="label_trigger">트리거 설정</string>
     <string name="label_capture">촬영</string>
     <string name="label_close">닫기</string>
@@ -48,4 +48,12 @@
     <string name="label_on">ON</string>
     <string name="msg_empty_album">생성된 앨범이 없습니다. 앨범생성 후 실행해주세요.</string>
     <string name="msg_success_save">저장 완료</string>
+    <string name="label_capture_enable">캡처도우미 활성화</string>
+    <string name="label_copyright">Copyright &#169; 2016, Aviv</string>
+    <string name="label_function">기능</string>
+    <string name="label_sync">동기화</string>
+    <string name="label_save_quality">저장 품질</string>
+    <string name="label_save_quality_50">50%</string>
+    <string name="label_save_quality_origin">원본</string>
+    <string name="label_save_folder">저장 폴더</string>
 </resources>

@@ -1,22 +1,26 @@
 package com.aviv.capturehelper.view.activity;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
+import android.os.Environment;
+import android.os.StatFs;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.widget.SwitchCompat;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
-import android.widget.ImageButton;
+import android.widget.TextView;
 
 import com.aviv.capturehelper.R;
 import com.aviv.capturehelper.common.Dialoger;
+import com.aviv.capturehelper.controller.AlbumDataLoader;
+import com.aviv.capturehelper.controller.Master;
 import com.aviv.capturehelper.model.dao.AlbumData;
 import com.aviv.capturehelper.model.wrapper.WrapAlbumData;
 import com.aviv.capturehelper.model.wrapper.WrapHelper;
@@ -30,12 +34,14 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class MainActivity extends BaseActivity
-        implements NavigationView.OnNavigationItemSelectedListener, AdapterView.OnItemClickListener, AdapterView.OnItemLongClickListener{
+        implements NavigationView.OnNavigationItemSelectedListener, AdapterView.OnItemClickListener, AdapterView.OnItemLongClickListener {
 
-    @Bind(R.id.btn_plus)
-    ImageButton mBtnPlus;
     @Bind(R.id.gv_album)
     GridView mGvAlbum;
+    @Bind(R.id.nav_view)
+    NavigationView mNaviView;
+    @Bind(R.id.sc_enable)
+    SwitchCompat mScEnable;
 
     CustomDialog mDialog;
     AdapterGridAlbum mAdapter;
@@ -51,15 +57,6 @@ public class MainActivity extends BaseActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-
         mAlbumDataList = WrapHelper.getAllAlbumData();
         mAdapter = new AdapterGridAlbum(this, R.layout.row_grid_album, mAlbumDataList);
         mGvAlbum.setAdapter(mAdapter);
@@ -68,28 +65,67 @@ public class MainActivity extends BaseActivity
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close) {
+            @Override
+            public void onDrawerClosed(View drawerView) {
+                super.onDrawerClosed(drawerView);
+            }
+
+            @Override
+            public void onDrawerOpened(View drawerView) {
+                super.onDrawerOpened(drawerView);
+                updateNavigationView();
+            }
+
+            @Override
+            public void onDrawerStateChanged(int newState) {
+                super.onDrawerStateChanged(newState);
+            }
+        };
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
         setNavigationView();
     }
 
-    private void setNavigationView()
+    private  void updateNavigationView()
     {
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
+        AlbumDataLoader loader = Master.getInstance().getAlbumDataLoader();
+        String strCount = String.format("%s %d개 %s %d개", getString(R.string.label_album), loader.getAlbumCount()
+                , getString(R.string.label_all_image), loader.getImageCount());
 
-//        AlbumDataLoader loader = Master.getInstance().getAlbumDataLoader();
-//        String strCount = String.format("%s %d개 %s %d개", getString(R.string.label_album), loader.getAlbumCount()
-//                , getString(R.string.label_all_image), loader.getImageCount());
-//
-//        TextView tvCount = (TextView)navigationView.findViewById(R.id.tv_count);
-//        tvCount.setText(strCount);
+        TextView tvCount = (TextView) mNaviView.findViewById(R.id.tv_count);
+        tvCount.setText(strCount);
+
+        StatFs statFs = new StatFs(Environment.getExternalStorageDirectory().getAbsolutePath());
+        long blockSize = statFs.getBlockSize();
+        long totalSize = statFs.getBlockCount() * blockSize;
+        long availableSize = statFs.getAvailableBlocks() * blockSize;
+
+        float totalGB = totalSize / (float) (1024 * 1024 * 1024);
+        float emptyGB = (totalSize - availableSize) / (float) (1024 * 1024 * 1024);
+        float wDiff = emptyGB / totalGB;
+
+        View backView = mNaviView.findViewById(R.id.v_back_storage);
+
+        TextView tvStorage = (TextView) mNaviView.findViewById(R.id.tv_storage);
+        View vForeStorage = mNaviView.findViewById(R.id.v_fore_storage);
+
+        ViewGroup.LayoutParams params = vForeStorage.getLayoutParams();
+        params.width = (int) (backView.getWidth() * wDiff);
+        vForeStorage.setLayoutParams(params);
+        tvStorage.setText(String.format("%.2fGB / %.2fGB", emptyGB, totalGB));
+
+
     }
 
-    private void refresh()
-    {
+    private void setNavigationView() {
+        mNaviView.setNavigationItemSelectedListener(this);
+        mScEnable.setChecked(Master.getInstance().getUserPrefLoader().getEnableHelper());
+        updateNavigationView();
+    }
+
+    private void refresh() {
         mAdapter.clear();
         mAlbumDataList = WrapHelper.getAllAlbumData();
         mAdapter = new AdapterGridAlbum(this, R.layout.row_grid_album, mAlbumDataList);
@@ -105,6 +141,31 @@ public class MainActivity extends BaseActivity
             super.onBackPressed();
         }
     }
+
+    @OnClick(R.id.fab_plus)
+    void onClickBtnPlus()
+    {
+        startCreateAlbumActivity();
+    }
+
+
+    @OnClick({R.id.btn_setting, R.id.sc_enable})
+    void onClickNavItem(View v) {
+        int id = v.getId();
+
+        switch (id) {
+            case R.id.btn_setting:
+                startSettingActivity();
+                DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+                drawer.closeDrawer(GravityCompat.START);
+                break;
+
+            case R.id.sc_enable:
+                Master.getInstance().getUserPrefLoader().putEnableHelper(mScEnable.isChecked());
+                break;
+        }
+    }
+
 
     @Override
     protected void finishedAlbumCreate(int resultCode) {
@@ -149,28 +210,22 @@ public class MainActivity extends BaseActivity
         return true;
     }
 
-    @OnClick(R.id.btn_plus)
-    void onClickPlusBtn(){
-        startCreateAlbumActivity();
-    }
-
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        WrapAlbumData albumData = (WrapAlbumData)parent.getItemAtPosition(position);
+        WrapAlbumData albumData = (WrapAlbumData) parent.getItemAtPosition(position);
 
-        if(!albumData.isEmpty())
+        if (!albumData.isEmpty())
             startAlbumActivity(albumData.getValue());
     }
 
-    private View.OnClickListener getDeleteListener(WrapAlbumData data)
-    {
-        if(data.isEmpty()) return null;
+    private View.OnClickListener getDeleteListener(WrapAlbumData data) {
+        if (data.isEmpty()) return null;
         final AlbumData albumData = data.getValue();
-        return  new View.OnClickListener() {
+        return new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mDialog.dismiss();
-                String message = String.format("%s %s",getString(R.string.msg_selected_album_prefix), albumData.getName());
+                String message = String.format("%s %s", getString(R.string.msg_selected_album_prefix), albumData.getName());
                 Dialoger.showAlertDialog(MainActivity.this, getString(R.string.title_delete_album), message, new Dialoger.AlertListener() {
                     @Override
                     public void onClickYes() {
@@ -186,12 +241,11 @@ public class MainActivity extends BaseActivity
         };
     }
 
-    private View.OnClickListener getModifyListener(WrapAlbumData data)
-    {
-        if(data.isEmpty()) return null;
+    private View.OnClickListener getModifyListener(WrapAlbumData data) {
+        if (data.isEmpty()) return null;
         final AlbumData albumData = data.getValue();
 
-        return new View.OnClickListener(){
+        return new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
@@ -204,9 +258,9 @@ public class MainActivity extends BaseActivity
     @Override
     public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
 
-        WrapAlbumData albumData = (WrapAlbumData)parent.getItemAtPosition(position);
+        WrapAlbumData albumData = (WrapAlbumData) parent.getItemAtPosition(position);
 
-        if(mDialog == null) {
+        if (mDialog == null) {
             mDialog = new CustomDialog(this);
             mDialog.addButton(getString(R.string.label_delete), getDeleteListener(albumData));
             mDialog.addButton(getString(R.string.label_modify), getModifyListener(albumData));
@@ -214,7 +268,7 @@ public class MainActivity extends BaseActivity
 
         mDialog.setTitle(albumData.getValue().getName());
 
-        if(mDialog.isShowing())
+        if (mDialog.isShowing())
             mDialog.dismiss();
 
         mDialog.show();

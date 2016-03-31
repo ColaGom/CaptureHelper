@@ -1,7 +1,10 @@
-package com.aviv.capturehelper.common;
+package com.aviv.capturehelper.controller;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+
+import com.aviv.capturehelper.common.Const;
+import com.aviv.capturehelper.common.Util;
 
 import java.text.SimpleDateFormat;
 
@@ -17,6 +20,20 @@ public class UserPrefLoader {
     public void init(Context context)
     {
         mPrefer = context.getSharedPreferences(KEY_PREF, 0);
+    }
+
+    private final String KEY_SAVE_QUALITY = "key.save.quality";
+
+    public int getSaveQuality()
+    {
+        return mPrefer.getInt(KEY_SAVE_QUALITY, Const.QUALITY_ORIGIN);
+    }
+
+    public void putSaveQuality(int quality)
+    {
+        SharedPreferences.Editor editor = mPrefer.edit();
+        editor.putInt(KEY_SAVE_QUALITY, quality);
+        editor.commit();
     }
 
     private final  String KEY_SAVE_FOLDER_PATH = "key.save.folder";
@@ -55,7 +72,7 @@ public class UserPrefLoader {
         return mPrefer.getString(KEY_SAVE_SUFFIX, Const.DEFULAT_SAVE_SUFFIX);
     }
 
-    public void setSaveSuffix(String suffix)
+    public void putSaveSuffix(String suffix)
     {
         SharedPreferences.Editor editor = mPrefer.edit();
         editor.putString(KEY_SAVE_SUFFIX, suffix);
@@ -65,5 +82,19 @@ public class UserPrefLoader {
     public String getSaveFileName()
     {
         return String.format("%s_%s.jpg",getSavePrefix(), Util.getNowDateString(new SimpleDateFormat(getSaveSuffix())));
+    }
+
+    private  final String KEY_ENABLE_HELPER = "key.enable.helper";
+
+    public boolean getEnableHelper()
+    {
+        return mPrefer.getBoolean(KEY_ENABLE_HELPER, true);
+    }
+
+    public void putEnableHelper(boolean enable)
+    {
+        SharedPreferences.Editor editor = mPrefer.edit();
+        editor.putBoolean(KEY_ENABLE_HELPER, enable);
+        editor.commit();
     }
 }

@@ -23,6 +23,7 @@ import com.aigestudio.wheelpicker.view.WheelCurvedPicker;
 import com.aviv.capturehelper.R;
 import com.aviv.capturehelper.controller.AlbumDataLoader;
 import com.aviv.capturehelper.controller.Master;
+import com.aviv.capturehelper.controller.UserPrefLoader;
 import com.aviv.capturehelper.model.dao.AlbumData;
 import com.aviv.capturehelper.view.activity.ScreenShotActivity;
 import com.orhanobut.logger.Logger;

@@ -2,8 +2,6 @@ package com.aviv.capturehelper.controller;
 
 import android.content.Context;
 
-import com.aviv.capturehelper.common.UserPrefLoader;
-
 /**
  * Created by Colabear on 2016-03-22.
  */

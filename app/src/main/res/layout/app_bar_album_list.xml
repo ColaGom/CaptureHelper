@@ -19,14 +19,14 @@
             android:background="?attr/colorPrimary"
             app:popupTheme="@style/AppTheme.PopupOverlay">
 
-            <ImageButton
+            <!-- <ImageButton
                 android:id="@+id/btn_plus"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
                 android:layout_marginRight="@dimen/default_padding"
                 android:background="@drawable/selector_trans_blue100"
-                android:src="@drawable/ic_add_circle_outline_white_36dp"/>
+                android:src="@drawable/ic_add_circle_outline_white_36dp"/> -->
 
         </android.support.v7.widget.Toolbar>
 
@@ -35,11 +35,11 @@
     <include layout="@layout/content_album_list" />
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab"
+        android:id="@+id/fab_plus"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/default_padding"
-        android:src="@drawable/ic_search_white_36dp" />
+        android:src="@drawable/ic_add_white_36dp" />
 
 </android.support.design.widget.CoordinatorLayout>

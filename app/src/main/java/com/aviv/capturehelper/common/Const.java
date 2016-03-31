@@ -11,4 +11,7 @@ public class Const {
     public static final String DEFULAT_SAVE_FOLDER = "aviv_capture";
     public static final String DEFULAT_SAVE_PREFIX = "Screenshot";
     public static final String DEFULAT_SAVE_SUFFIX = "yyyy-MM-dd-hh:mm:ss";
+
+    public static  final int QUALITY_50 = 0;
+    public static  final int QUALITY_ORIGIN = 1;
 }
