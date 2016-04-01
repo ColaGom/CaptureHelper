@@ -10,3 +10,4 @@ CaptureHelper
 [Floating Window](https://www.youtube.com/watch?v=kjGPE_XLmwg)<br>
 [Subsampling Scale Image View](https://github.com/davemorrissey/subsampling-scale-image-view)<br>
 [Pattern Lock](https://github.com/DreaminginCodeZH/PatternLock)<br>
+[Logger](https://github.com/orhanobut/logger)<br>
