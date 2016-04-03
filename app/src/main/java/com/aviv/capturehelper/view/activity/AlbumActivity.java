@@ -132,7 +132,6 @@ public class AlbumActivity extends BaseActivity implements AdapterView.OnItemCli
 
     private void refreshAdapter()
     {
-//        mGvAlbum.removeAllViews();
         mListFile = Arrays.asList(Util.getListOfImageFiles(mAlbum.getPath()));
         mAdapter = new AdapterImage(AlbumActivity.this, R.layout.row_image, mListFile);
         mGvAlbum.setAdapter(mAdapter);
@@ -141,7 +140,6 @@ public class AlbumActivity extends BaseActivity implements AdapterView.OnItemCli
     //TODO : complete moved Image notify change data in MainActivity(Album list)
     private  void showMoveDialog()
     {
-       // mDialog = Dialoger.createSelectAlbumDialog(this);
         Dialoger.showSelectAlbumDialog(this, new Dialoger.SelectAlbumListener() {
             @Override
             public void onSelectedAlbum(int idx) {
@@ -152,35 +150,5 @@ public class AlbumActivity extends BaseActivity implements AdapterView.OnItemCli
                 refreshAdapter();
             }
         });
-//        WheelCurvedPicker mWcpAlbum = (WheelCurvedPicker)mDialog.findViewById(R.id.wcp_album);
-//        mWcpAlbum.setData(extractAlbumName(Master.getInstance().getAlbumDataLoader().getAll()));
-
-//      mDialog = Dialoger.createSelectAlbumDialog(this);
-
-        //WheelCurvedPicker mWcpAlbum = (WheelCurvedPicker)mDialog.findViewById(R.id.wcp_album);
-        //mWcpAlbum.setData(extractAlbumName(Master.getInstance().getAlbumDataLoader().getAll()));
-
-//        View btnCompelete = mDialog.findViewById(R.id.btn_complete);
-//        View btnCancel = mDialog.findViewById(R.id.btn_cancel);
-//
-//        btnCompelete.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                if(mDialog.isShowing())
-//                   mDialog.dismiss();
-//            }
-//        });
-//
-//        btnCancel.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                if(mDialog.isShowing())
-//                    mDialog.dismiss();
-//            }
-//        });
-
-//        mDialog.show();
     }
-
-
 }
