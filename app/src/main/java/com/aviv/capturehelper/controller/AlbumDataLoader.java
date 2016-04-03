@@ -53,6 +53,10 @@ public class AlbumDataLoader extends Loader<AlbumData> {
         invaildData(mLoadedList);
         return mLoadedList;
     }
+    public AlbumData get(int idx)
+    {
+        return mLoadedList.get(idx);
+    }
 
     private void invaildData(List<AlbumData> list)
     {

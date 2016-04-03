@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/root"
+    android:layout_width="300dp"
+    android:layout_height="200dp"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/root_components"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btn_cancel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/default_padding"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:padding="@dimen/default_padding"
+            android:text="@string/label_cancel" />
+
+        <Button
+            android:id="@+id/btn_complete"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:padding="@dimen/default_padding"
+            android:text="@string/label_complete" />
+
+    </LinearLayout>
+
+    <com.aigestudio.wheelpicker.view.WheelCurvedPicker
+        android:id="@+id/wcp_album"
+        android:layout_width="match_parent"
+        android:layout_height="160dp"
+        android:layout_above="@id/root_components"
+        android:background="@drawable/background_rounded_8_white"
+        app:wheel_text_size="30sp" />
+
+</RelativeLayout>

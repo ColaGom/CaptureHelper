@@ -1,6 +1,7 @@
 package com.aviv.capturehelper.view.activity;
 
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
@@ -10,7 +11,9 @@ import com.aviv.capturehelper.common.Const;
 import com.aviv.capturehelper.common.Dialoger;
 import com.aviv.capturehelper.common.Util;
 import com.aviv.capturehelper.controller.ActivityStarter;
+import com.aviv.capturehelper.controller.Master;
 import com.aviv.capturehelper.model.dao.AlbumData;
+import com.aviv.capturehelper.model.wrapper.WrapAlbumData;
 import com.aviv.capturehelper.view.adapter.AdapterImage;
 
 import java.io.File;
@@ -29,10 +32,10 @@ public class AlbumActivity extends BaseActivity implements AdapterView.OnItemCli
     @Bind(R.id.btn_delete)
     View mBtnDelete;
 
-
     @Bind(R.id.btn_move)
     View mBtnMove;
 
+    AlertDialog mDialog;
     AlbumData mAlbum;
     AdapterImage mAdapter;
     List<File> mListFile;
@@ -87,7 +90,12 @@ public class AlbumActivity extends BaseActivity implements AdapterView.OnItemCli
                 Dialoger.showAlertDialog(this, getString(R.string.title_image_delete), getString(R.string.msg_album_delete), new Dialoger.AlertListener() {
                     @Override
                     public void onClickYes() {
+                        List<File> selectedItem = mAdapter.getSelectedItem();
 
+                        for(File f:selectedItem)
+                            f.delete();
+
+                        mAdapter.notifyDataSetChanged();
                     }
 
                     @Override
@@ -98,10 +106,10 @@ public class AlbumActivity extends BaseActivity implements AdapterView.OnItemCli
                 break;
 
             case R.id.btn_move:
+                showMoveDialog();
                 break;
         }
     }
-
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -121,4 +129,58 @@ public class AlbumActivity extends BaseActivity implements AdapterView.OnItemCli
         setComponents();
         return true;
     }
+
+    private void refreshAdapter()
+    {
+//        mGvAlbum.removeAllViews();
+        mListFile = Arrays.asList(Util.getListOfImageFiles(mAlbum.getPath()));
+        mAdapter = new AdapterImage(AlbumActivity.this, R.layout.row_image, mListFile);
+        mGvAlbum.setAdapter(mAdapter);
+    }
+
+    //TODO : complete moved Image notify change data in MainActivity(Album list)
+    private  void showMoveDialog()
+    {
+       // mDialog = Dialoger.createSelectAlbumDialog(this);
+        Dialoger.showSelectAlbumDialog(this, new Dialoger.SelectAlbumListener() {
+            @Override
+            public void onSelectedAlbum(int idx) {
+                for(File f:mAdapter.getSelectedItem()){
+                    Util.moveFile(new WrapAlbumData(Master.getInstance().getAlbumDataLoader().get(idx)), f.getPath());
+                }
+
+                refreshAdapter();
+            }
+        });
+//        WheelCurvedPicker mWcpAlbum = (WheelCurvedPicker)mDialog.findViewById(R.id.wcp_album);
+//        mWcpAlbum.setData(extractAlbumName(Master.getInstance().getAlbumDataLoader().getAll()));
+
+//      mDialog = Dialoger.createSelectAlbumDialog(this);
+
+        //WheelCurvedPicker mWcpAlbum = (WheelCurvedPicker)mDialog.findViewById(R.id.wcp_album);
+        //mWcpAlbum.setData(extractAlbumName(Master.getInstance().getAlbumDataLoader().getAll()));
+
+//        View btnCompelete = mDialog.findViewById(R.id.btn_complete);
+//        View btnCancel = mDialog.findViewById(R.id.btn_cancel);
+//
+//        btnCompelete.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if(mDialog.isShowing())
+//                   mDialog.dismiss();
+//            }
+//        });
+//
+//        btnCancel.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if(mDialog.isShowing())
+//                    mDialog.dismiss();
+//            }
+//        });
+
+//        mDialog.show();
+    }
+
+
 }

@@ -40,25 +40,27 @@ public class BaseActivity extends AppCompatActivity {
         startActivityForResult(i, REQUEST_ALBUM);
     }
 
-    protected void setToolbar(int titleRes)
+    protected  void setToolbar(String title)
     {
-        setToolbar(getString(titleRes));
+        setToolbar(title, true);
     }
 
-    protected void setToolbar(String title)
+    protected void setToolbar(int titleRes)
+    {
+        setToolbar(getString(titleRes), true);
+    }
+
+    protected void setToolbar(String title, boolean displayHome)
     {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle(title);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle(title);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(displayHome);
     }
 
     protected void setToolbar(int titleRes, boolean displayHome)
     {
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle(getString(titleRes));
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(displayHome);
+        setToolbar(getString(titleRes), displayHome);
     }
 
     protected  void startCreateAlbumActivity()

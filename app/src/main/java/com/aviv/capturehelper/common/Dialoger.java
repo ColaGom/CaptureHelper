@@ -2,11 +2,26 @@ package com.aviv.capturehelper.common;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.Rect;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 
+import com.aigestudio.wheelpicker.core.AbstractWheelDecor;
+import com.aigestudio.wheelpicker.core.AbstractWheelPicker;
+import com.aigestudio.wheelpicker.view.WheelCurvedPicker;
 import com.aviv.capturehelper.R;
+import com.aviv.capturehelper.controller.Master;
+import com.aviv.capturehelper.model.dao.AlbumData;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import butterknife.Bind;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 
 /**
@@ -53,4 +68,99 @@ public class Dialoger {
         return builder.create();
     }
 
+
+    public interface SelectAlbumListener
+    {
+        void onSelectedAlbum(int idx);
+    }
+    public static class ViewHolderAlbumDialog
+    {
+        @Bind(R.id.wcp_album)
+        WheelCurvedPicker mWcpAlbum;
+
+        AlertDialog mDialog;
+        SelectAlbumListener mListener;
+        int mCurrentIdx;
+
+        public ViewHolderAlbumDialog(AlertDialog dialog, SelectAlbumListener listener)
+        {
+            mDialog = dialog;
+            mListener = listener;
+        }
+
+        public void bind(View view)
+        {
+            ButterKnife.bind(this, view);
+
+            mWcpAlbum.setOnWheelChangeListener(new AbstractWheelPicker.OnWheelChangeListener() {
+                @Override
+                public void onWheelScrolling(float deltaX, float deltaY) {
+
+                }
+
+                @Override
+                public void onWheelSelected(int index, String data) {
+                    mCurrentIdx = index;
+                }
+
+                @Override
+                public void onWheelScrollStateChanged(int state) {
+
+                }
+            });
+
+            mWcpAlbum.setData(extractAlbumName(Master.getInstance().getAlbumDataLoader().getAll()));
+
+            mWcpAlbum.setWheelDecor(true, new AbstractWheelDecor() {
+                @Override
+                public void drawDecor(Canvas canvas, Rect rectLast, Rect rectNext, Paint paint) {
+                    canvas.drawColor(0x8847A1D9);
+                }
+            });
+        }
+
+        @OnClick({R.id.btn_complete, R.id.btn_cancel})
+        void onClick(View view)
+        {
+            int id = view.getId();
+            switch (id)
+            {
+                case R.id.btn_complete:
+                    mListener.onSelectedAlbum(mCurrentIdx);
+                    if(mDialog.isShowing())
+                        mDialog.dismiss();
+                    break;
+                case R.id.btn_cancel:
+                    if(mDialog.isShowing())
+                        mDialog.dismiss();
+                    break;
+            }
+        }
+    }
+    public static void showSelectAlbumDialog(Context context, SelectAlbumListener listener)
+    {
+        LayoutInflater inflater = LayoutInflater.from(context);
+        View view = inflater.inflate(R.layout.dialog_select_album, null);
+
+        AlertDialog dialog = new AlertDialog.Builder(context)
+                .setTitle(context.getString(R.string.title_select_album))
+                .setView(view)
+                .create();
+
+        ViewHolderAlbumDialog holder = new ViewHolderAlbumDialog(dialog, listener);
+        holder.bind(view);
+
+        dialog.show();
+        dialog.getWindow().setLayout(Util.dpToPx(context, 300), Util.dpToPx(context,200));
+    }
+
+    private static List<String> extractAlbumName(List<AlbumData> list)
+    {
+        List<String> result = new ArrayList<>();
+        for(AlbumData album:list)
+        {
+            result.add(album.getName());
+        }
+        return result;
+    }
 }

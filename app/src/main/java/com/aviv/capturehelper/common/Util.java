@@ -38,12 +38,12 @@ public class Util {
         return format.format(new java.util.Date());
     }
 
-    public static float pxToDp(final Context context, final float px) {
-        return px / context.getResources().getDisplayMetrics().density;
+    public static int pxToDp(final Context context, final int px) {
+        return (int)(px / context.getResources().getDisplayMetrics().density);
     }
 
-    public static float dpToPx(final Context context, final float dp) {
-        return dp * context.getResources().getDisplayMetrics().density;
+    public static int dpToPx(final Context context, final int dp) {
+        return (int)(dp * context.getResources().getDisplayMetrics().density);
     }
 
     private static final String[] okFileExtensions = new String[] {"jpg", "jpeg","png"};
