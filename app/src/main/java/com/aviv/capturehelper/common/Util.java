@@ -3,16 +3,19 @@ package com.aviv.capturehelper.common;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.BitmapShader;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
+import com.aviv.capturehelper.controller.Master;
 import com.aviv.capturehelper.model.wrapper.WrapAlbumData;
 
 import java.io.File;
 import java.io.FileFilter;
+import java.io.FileOutputStream;
 import java.text.SimpleDateFormat;
 
 /**
@@ -88,9 +91,29 @@ public class Util {
         return bitmap;
     }
 
-    public static void moveFile(WrapAlbumData albumData, String path){
+    public static void moveFile(WrapAlbumData albumData, String path,boolean resize){
         File from = new File(path);
         File to = new File(albumData.getValue().getPath(), from.getName());
         from.renameTo(to);
+
+        if(resize && Master.getInstance().getUserPrefLoader().getSaveQuality() == Const.QUALITY_50)
+        {
+            resizedFile(to);
+        }
+    }
+
+    private static void resizedFile(File file){
+        Bitmap bitmap = BitmapFactory.decodeFile(file.getPath());
+
+        try {
+            Bitmap resizedBitmap = Bitmap.createScaledBitmap(bitmap, bitmap.getWidth() / 2, bitmap.getHeight() / 2, true);
+            FileOutputStream fos = new FileOutputStream(file.getPath());
+            resizedBitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos);
+            fos.flush();
+            fos.close();
+        }catch (Exception e)
+        {
+            e.printStackTrace();
+        }
     }
 }

@@ -16,6 +16,7 @@ import android.support.annotation.Nullable;
 import android.widget.RemoteViews;
 
 import com.aviv.capturehelper.R;
+import com.aviv.capturehelper.controller.Master;
 import com.aviv.capturehelper.view.activity.AlbumPopupActivity;
 import com.orhanobut.logger.Logger;
 
@@ -41,9 +42,6 @@ public class CaptureService extends Service implements ICaptureListener {
     public void onCreate() {
         super.onCreate();
 
-        //Disable Notification...
-        //createNotification();
-
         unregisterRestartAlarm();
         monitorAllFiles(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES));
         new Timer().scheduleAtFixedRate(new TimerTask() {
@@ -53,9 +51,12 @@ public class CaptureService extends Service implements ICaptureListener {
                 {
                     Logger.e("Observer is null");
                     monitorAllFiles(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES));
+                }else
+                {
+                    mObserver.startWatching();
                 }
             }
-        }, 1000, TIME_PREIOD);
+        }, 5000, TIME_PREIOD);
     }
     
     @Override
@@ -66,6 +67,7 @@ public class CaptureService extends Service implements ICaptureListener {
 
     @Override
     public void onCapture(String path) {
+        if(!Master.getInstance().getUserPrefLoader().getEnableHelper()) return;
         Intent intent = new Intent(this, AlbumPopupActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.putExtra(Const.EXTRA_FILE_PATH, path);

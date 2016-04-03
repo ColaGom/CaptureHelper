@@ -6,6 +6,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.aviv.capturehelper.R;
 import com.aviv.capturehelper.controller.Master;
@@ -55,6 +56,12 @@ public class CreateAlbumActivity extends BaseActivity {
 
     private void createAlbum(){
         String name = mEtInput.getText().toString();
+
+        if(Master.getInstance().getAlbumDataLoader().containsAlbum(name)){
+            Toast.makeText(this, getString(R.string.msg_contains_album), Toast.LENGTH_SHORT).show();
+            return;
+        }
+        
         String path = Environment.getExternalStorageDirectory()
                 + File.separator + Master.getInstance().getUserPrefLoader().getFolderPath()
                 + File.separator + name;

@@ -71,7 +71,7 @@ public class Dialoger {
 
     public interface SelectAlbumListener
     {
-        void onSelectedAlbum(int idx);
+        void onSelectedAlbum(AlbumData albumData);
     }
     public static class ViewHolderAlbumDialog
     {
@@ -80,7 +80,7 @@ public class Dialoger {
 
         AlertDialog mDialog;
         SelectAlbumListener mListener;
-        int mCurrentIdx;
+        String mCurrentAlbum;
 
         public ViewHolderAlbumDialog(AlertDialog dialog, SelectAlbumListener listener)
         {
@@ -88,7 +88,7 @@ public class Dialoger {
             mListener = listener;
         }
 
-        public void bind(View view)
+        public void bind(View view, String filter)
         {
             ButterKnife.bind(this, view);
 
@@ -100,7 +100,7 @@ public class Dialoger {
 
                 @Override
                 public void onWheelSelected(int index, String data) {
-                    mCurrentIdx = index;
+                    mCurrentAlbum = data;
                 }
 
                 @Override
@@ -109,7 +109,7 @@ public class Dialoger {
                 }
             });
 
-            mWcpAlbum.setData(extractAlbumName(Master.getInstance().getAlbumDataLoader().getAll()));
+            mWcpAlbum.setData(extractAlbumName(Master.getInstance().getAlbumDataLoader().getAll(), filter));
 
             mWcpAlbum.setWheelDecor(true, new AbstractWheelDecor() {
                 @Override
@@ -126,7 +126,7 @@ public class Dialoger {
             switch (id)
             {
                 case R.id.btn_complete:
-                    mListener.onSelectedAlbum(mCurrentIdx);
+                    mListener.onSelectedAlbum(Master.getInstance().getAlbumDataLoader().get(mCurrentAlbum));
                     if(mDialog.isShowing())
                         mDialog.dismiss();
                     break;
@@ -137,7 +137,7 @@ public class Dialoger {
             }
         }
     }
-    public static void showSelectAlbumDialog(Context context, SelectAlbumListener listener)
+    public static void showSelectAlbumDialog(Context context, String filter,SelectAlbumListener listener)
     {
         LayoutInflater inflater = LayoutInflater.from(context);
         View view = inflater.inflate(R.layout.dialog_select_album, null);
@@ -148,18 +148,19 @@ public class Dialoger {
                 .create();
 
         ViewHolderAlbumDialog holder = new ViewHolderAlbumDialog(dialog, listener);
-        holder.bind(view);
+        holder.bind(view, filter);
 
         dialog.show();
         dialog.getWindow().setLayout(Util.dpToPx(context, 300), Util.dpToPx(context,200));
     }
 
-    private static List<String> extractAlbumName(List<AlbumData> list)
+    private static List<String> extractAlbumName(List<AlbumData> list,String filter)
     {
         List<String> result = new ArrayList<>();
         for(AlbumData album:list)
         {
-            result.add(album.getName());
+            if(!album.getName().equals(filter))
+                result.add(album.getName());
         }
         return result;
     }

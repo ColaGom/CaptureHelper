@@ -44,6 +44,15 @@ public class AlbumDataLoader extends Loader<AlbumData> {
         return mImageCount;
     }
 
+    public boolean containsAlbum(String name){
+        for(AlbumData album:getAll())
+        {
+            if(album.getName().equals(name))
+                return true;
+        }
+        return false;
+    }
+
     @Override
     public List<AlbumData> getAll() {
         if(mLoadedList.size() == 0 && getDao().count() > 0) {
@@ -53,9 +62,15 @@ public class AlbumDataLoader extends Loader<AlbumData> {
         invaildData(mLoadedList);
         return mLoadedList;
     }
-    public AlbumData get(int idx)
+    public AlbumData get(String album)
     {
-        return mLoadedList.get(idx);
+        for(AlbumData data:mLoadedList)
+        {
+            if(data.getName().equals(album))
+                return  data;
+        }
+
+        return  null;
     }
 
     private void invaildData(List<AlbumData> list)

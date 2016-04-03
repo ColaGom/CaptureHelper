@@ -11,7 +11,6 @@ import com.aviv.capturehelper.common.Const;
 import com.aviv.capturehelper.common.Dialoger;
 import com.aviv.capturehelper.common.Util;
 import com.aviv.capturehelper.controller.ActivityStarter;
-import com.aviv.capturehelper.controller.Master;
 import com.aviv.capturehelper.model.dao.AlbumData;
 import com.aviv.capturehelper.model.wrapper.WrapAlbumData;
 import com.aviv.capturehelper.view.adapter.AdapterImage;
@@ -34,6 +33,11 @@ public class AlbumActivity extends BaseActivity implements AdapterView.OnItemCli
 
     @Bind(R.id.btn_move)
     View mBtnMove;
+
+    @Bind(R.id.btn_select_all)
+    View mBtnSelectAll;
+    @Bind(R.id.btn_deselect_all)
+    View mBtnDeselectAll;
 
     AlertDialog mDialog;
     AlbumData mAlbum;
@@ -62,6 +66,14 @@ public class AlbumActivity extends BaseActivity implements AdapterView.OnItemCli
     }
 
     private void setComponents() {
+        if (mAdapter.getCount() > 0) {
+            mBtnSelectAll.setVisibility(View.VISIBLE);
+            mBtnDeselectAll.setVisibility(View.VISIBLE);
+        } else {
+            mBtnSelectAll.setVisibility(View.GONE);
+            mBtnDeselectAll.setVisibility(View.GONE);
+        }
+
         if (mAdapter.getSelectedCount() > 0) {
             mBtnDelete.setVisibility(View.VISIBLE);
             mBtnMove.setVisibility(View.VISIBLE);
@@ -75,8 +87,7 @@ public class AlbumActivity extends BaseActivity implements AdapterView.OnItemCli
     void onClick(View view) {
         int id = view.getId();
 
-        switch (id)
-        {
+        switch (id) {
             case R.id.btn_select_all:
                 mAdapter.selectAll();
                 setComponents();
@@ -92,10 +103,11 @@ public class AlbumActivity extends BaseActivity implements AdapterView.OnItemCli
                     public void onClickYes() {
                         List<File> selectedItem = mAdapter.getSelectedItem();
 
-                        for(File f:selectedItem)
+                        for (File f : selectedItem)
                             f.delete();
 
-                        mAdapter.notifyDataSetChanged();
+                       // mAdapter.notifyDataSetChanged();
+                        refresh();
                     }
 
                     @Override
@@ -113,9 +125,9 @@ public class AlbumActivity extends BaseActivity implements AdapterView.OnItemCli
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        if(mAdapter.getSelectedCount() == 0){
+        if (mAdapter.getSelectedCount() == 0) {
             ActivityStarter.startImageViewActivity(this, mListFile, position);
-        }else{
+        } else {
             File item = (File) parent.getItemAtPosition(position);
             mAdapter.select(item);
             setComponents();
@@ -130,24 +142,21 @@ public class AlbumActivity extends BaseActivity implements AdapterView.OnItemCli
         return true;
     }
 
-    private void refreshAdapter()
-    {
+    private void refresh() {
         mListFile = Arrays.asList(Util.getListOfImageFiles(mAlbum.getPath()));
         mAdapter = new AdapterImage(AlbumActivity.this, R.layout.row_image, mListFile);
         mGvAlbum.setAdapter(mAdapter);
+        setComponents();
     }
 
-    //TODO : complete moved Image notify change data in MainActivity(Album list)
-    private  void showMoveDialog()
-    {
-        Dialoger.showSelectAlbumDialog(this, new Dialoger.SelectAlbumListener() {
+    private void showMoveDialog() {
+        Dialoger.showSelectAlbumDialog(this, mAlbum.getName(), new Dialoger.SelectAlbumListener() {
             @Override
-            public void onSelectedAlbum(int idx) {
-                for(File f:mAdapter.getSelectedItem()){
-                    Util.moveFile(new WrapAlbumData(Master.getInstance().getAlbumDataLoader().get(idx)), f.getPath());
+            public void onSelectedAlbum(AlbumData albumData) {
+                for (File f : mAdapter.getSelectedItem()) {
+                    Util.moveFile(new WrapAlbumData(albumData), f.getPath(), false);
                 }
-
-                refreshAdapter();
+                refresh();
             }
         });
     }

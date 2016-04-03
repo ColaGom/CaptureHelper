@@ -132,7 +132,7 @@ public class AlbumPopupActivity extends BaseActivity implements AdapterView.OnIt
                 public void onClickYes() {
                     albumData.getValue().setIsnew(true);
                     Master.getInstance().getAlbumDataLoader().insert(albumData.getValue());
-                    Util.moveFile(albumData, mPath);
+                    Util.moveFile(albumData, mPath, true);
                     Toast.makeText(AlbumPopupActivity.this, getString(R.string.msg_saved), Toast.LENGTH_SHORT).show();
                     finish();
                 }

@@ -62,9 +62,6 @@ public class MainActivity extends BaseActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        mAlbumDataList = WrapHelper.getAllAlbumData();
-        mAdapter = new AdapterGridAlbum(this, R.layout.row_grid_album, mAlbumDataList);
-        mGvAlbum.setAdapter(mAdapter);
         mGvAlbum.setOnItemClickListener(this);
         mGvAlbum.setOnItemLongClickListener(this);
 
@@ -119,8 +116,6 @@ public class MainActivity extends BaseActivity
         params.width = (int) (backView.getWidth() * wDiff);
         vForeStorage.setLayoutParams(params);
         tvStorage.setText(String.format("%.2fGB / %.2fGB", emptyGB, totalGB));
-
-
     }
 
     private void setNavigationView() {
@@ -129,8 +124,13 @@ public class MainActivity extends BaseActivity
         updateNavigationView();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        refresh();
+    }
+
     private void refresh() {
-        mAdapter.clear();
         mAlbumDataList = WrapHelper.getAllAlbumData();
         mAdapter = new AdapterGridAlbum(this, R.layout.row_grid_album, mAlbumDataList);
         mGvAlbum.setAdapter(mAdapter);
