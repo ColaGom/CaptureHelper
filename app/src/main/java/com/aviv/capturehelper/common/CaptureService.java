@@ -18,7 +18,6 @@ import android.widget.RemoteViews;
 import com.aviv.capturehelper.R;
 import com.aviv.capturehelper.controller.Master;
 import com.aviv.capturehelper.view.activity.AlbumPopupActivity;
-import com.orhanobut.logger.Logger;
 
 import java.io.File;
 import java.util.Timer;
@@ -47,14 +46,8 @@ public class CaptureService extends Service implements ICaptureListener {
         new Timer().scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
-                if(mObserver == null)
-                {
-                    Logger.e("Observer is null");
-                    monitorAllFiles(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES));
-                }else
-                {
-                    mObserver.startWatching();
-                }
+                mObserver.stopWatching();
+                monitorAllFiles(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES));
             }
         }, 5000, TIME_PREIOD);
     }
@@ -69,9 +62,13 @@ public class CaptureService extends Service implements ICaptureListener {
     public void onCapture(String path) {
         if(!Master.getInstance().getUserPrefLoader().getEnableHelper()) return;
         Intent intent = new Intent(this, AlbumPopupActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+        intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
         intent.putExtra(Const.EXTRA_FILE_PATH, path);
         startActivity(intent);
+
     }
 
     public void registerRestartAlarm() {

@@ -42,7 +42,8 @@
         <activity android:name=".view.activity.CreateAlbumActivity" />
         <activity
             android:name=".view.activity.AlbumPopupActivity"
-            android:launchMode="singleTop"
+            android:launchMode="singleTask"
+            android:noHistory="true"
             android:theme="@style/Theme.AppCompat.Translucent" />
 
         <activity android:name=".view.activity.AlbumActivity" />
