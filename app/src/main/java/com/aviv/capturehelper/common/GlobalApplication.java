@@ -14,8 +14,6 @@ import com.orhanobut.logger.Logger;
 public class GlobalApplication extends Application {
 
     private CaptureReceiver mReceiver;
-    private CaptureService mService;
-
     @Override
     public void onCreate() {
         super.onCreate();
@@ -33,16 +31,14 @@ public class GlobalApplication extends Application {
             e.printStackTrace();
         }
 
-        Intent intent = new Intent(this, CaptureService.class);
-        startService(intent);
+
     }
+
+
 
     @Override
     public void onTerminate() {
         unregisterReceiver(mReceiver);
-
-        Intent intent = new Intent(this, CaptureService.class);
-        startService(intent);
 
         super.onTerminate();
     }

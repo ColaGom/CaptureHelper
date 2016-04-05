@@ -116,7 +116,6 @@ public class AlbumPopupActivity extends BaseActivity implements AdapterView.OnIt
     @OnClick(R.id.btn_plus)
     void onClickPlus()
     {
-
     }
 
     @Override

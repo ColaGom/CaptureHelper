@@ -1,9 +1,15 @@
 package com.aviv.capturehelper.view.activity;
 
+import android.Manifest;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.StatFs;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -19,6 +25,7 @@ import android.widget.GridView;
 import android.widget.TextView;
 
 import com.aviv.capturehelper.R;
+import com.aviv.capturehelper.common.CaptureService;
 import com.aviv.capturehelper.common.Dialoger;
 import com.aviv.capturehelper.controller.AlbumDataLoader;
 import com.aviv.capturehelper.controller.Master;
@@ -87,6 +94,56 @@ public class MainActivity extends BaseActivity
         drawer.setDrawerListener(toggle);
         toggle.syncState();
         setNavigationView();
+
+        requestOrStartService();
+    }
+
+    private void startCaptureService()
+    {
+        Intent intent = new Intent(this, CaptureService.class);
+        startService(intent);
+    }
+
+    private void requestOrStartService()
+    {
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+            if(checkPermissionGrant()){
+                startCaptureService();
+            }else
+                requestPermission();
+        }else{
+            startCaptureService();
+        }
+    }
+
+    private final String[] permissions = new String[]{ Manifest.permission.WRITE_EXTERNAL_STORAGE };
+
+    private void requestPermission() {
+        ActivityCompat.requestPermissions(this, permissions, 0);
+    }
+
+    private boolean checkPermissionGrant()
+    {
+        for(String permission:permissions)
+        {
+            if(ContextCompat.checkSelfPermission(this, permission) != PackageManager.PERMISSION_GRANTED) return false;
+        }
+        return true;
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        requestOrStartService();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        Intent intent = new Intent(this, CaptureService.class);
+        startService(intent);
     }
 
     private  void updateNavigationView()

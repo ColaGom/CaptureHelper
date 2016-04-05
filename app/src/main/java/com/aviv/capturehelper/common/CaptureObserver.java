@@ -4,8 +4,6 @@ import android.os.FileObserver;
 
 import com.orhanobut.logger.Logger;
 
-import java.util.Arrays;
-
 /**
  * Created by Counter on 2016-03-11.
  */
@@ -17,7 +15,7 @@ public class CaptureObserver extends FileObserver {
             FileObserver.DELETE, FileObserver.DELETE_SELF,FileObserver.MODIFY,FileObserver.MOVED_FROM,FileObserver.MOVED_TO, FileObserver.MOVE_SELF,FileObserver.OPEN};
     final String[] eventName = new String[] {"ACCESS", "ALL_EVENTS", "ATTRIB", "CLOSE_NOWRITE", "CLOSE_WRITE", "CREATE",
             "DELETE", "DELETE_SELF" , "MODIFY" , "MOVED_FROM" ,"MOVED_TO", "MOVE_SELF","OPEN"};
-    final String[] filters = new String[] {"Screenshots"};
+
 
     ICaptureListener mListener;
 
@@ -42,13 +40,14 @@ public class CaptureObserver extends FileObserver {
                 sbEvent.append(',');
             }
         }
+
         sbEvent.append("\tPath : ").append(path).append('(').append(mPath).append(')');
+
+        Logger.i(sbEvent.toString());
 
         if(event == FileObserver.CLOSE_WRITE) {
             Logger.i(sbEvent.toString());
-            if(mPath.contains("Screenshots")){
-                mListener.onCapture(mPath + "/" + path);
-            }
+            mListener.onCapture(mPath + "/" + path);
         }
 
         if(event == FileObserver.CREATE) {

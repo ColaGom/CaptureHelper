@@ -7,9 +7,9 @@ android {
     defaultConfig {
         applicationId "com.aviv.capturehelper"
         minSdkVersion 14
-        targetSdkVersion 19
+        targetSdkVersion 23
         versionCode 1
-        versionName "1.0"
+        versionName "1.0.0"
     }
     buildTypes {
         release {

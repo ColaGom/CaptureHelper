@@ -18,8 +18,11 @@ import android.widget.RemoteViews;
 import com.aviv.capturehelper.R;
 import com.aviv.capturehelper.controller.Master;
 import com.aviv.capturehelper.view.activity.AlbumPopupActivity;
+import com.orhanobut.logger.Logger;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -27,10 +30,15 @@ import java.util.TimerTask;
  * Created by Counter on 2016-03-11.
  */
 public class CaptureService extends Service implements ICaptureListener {
-    private final long TIME_PREIOD = 5000;
-    private CaptureObserver mObserver;
+    private final long TIME_PREIOD = 3000;
+    private List<File> mListOriginFile;
 
+    final String[] filters = new String[] {"Screenshots"};
 
+    final File[] roots = new File[] {
+            Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES),
+            Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM)
+    };
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
@@ -41,21 +49,56 @@ public class CaptureService extends Service implements ICaptureListener {
     public void onCreate() {
         super.onCreate();
 
+        Logger.d("onCreate");
+
+        mListOriginFile = new ArrayList<>();
         unregisterRestartAlarm();
-        monitorAllFiles(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES));
+
+        for(File root:roots)
+            addOriginFiles(root);
+
         new Timer().scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
-                mObserver.stopWatching();
-                monitorAllFiles(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES));
+                for(File root:roots)
+                    checkNewPicture(root);
             }
-        }, 5000, TIME_PREIOD);
+        }, 1000, TIME_PREIOD);
     }
     
     @Override
     public void onDestroy() {
         super.onDestroy();
         registerRestartAlarm();
+    }
+
+    private void checkNewPicture(File root){
+        File[] files = root.listFiles();
+
+        for(File file: files)
+        {
+            if(file.isDirectory()){
+                checkNewPicture(file);
+            }else if(containsFilter(file.getParentFile().getName()) && !mListOriginFile.contains(file)){
+                Logger.d("New Picture : " + file.getPath());
+                mListOriginFile.add(file);
+                onCapture(file.getPath());
+            }
+        }
+    }
+
+    private void addOriginFiles(File root)
+    {
+        File[] files = root.listFiles();
+        for(File file: files)
+        {
+            if(file.isDirectory()){
+                addOriginFiles(file);
+            }else if(containsFilter(file.getParentFile().getName())){
+                Logger.d("Add Origin : " + file.getPath());
+                mListOriginFile.add(file);
+            }
+        }
     }
 
     @Override
@@ -89,15 +132,30 @@ public class CaptureService extends Service implements ICaptureListener {
         am.cancel(sender);
     }
 
+
     private void monitorAllFiles(File root) {
         File[] files = root.listFiles();
         for(File file : files) {
             if(file.isDirectory()){
                 monitorAllFiles(file);
-                mObserver = new CaptureObserver(file.getAbsolutePath(), this);
-                mObserver.startWatching();
+                if(containsFilter(file.getName())) {
+                    Logger.d("startWatching : " + file.getName());
+//                    CaptureObserver observer = new CaptureObserver(file.getAbsolutePath(), this);
+//                    observer.startWatching();
+//                    mListObserver.add(observer);
+                     //File [] origin = file.listFiles();
+                }
             }
         }
+    }
+
+    private boolean containsFilter(String name)
+    {
+        for(String filter:filters)
+        {
+            if(filter.equals(name)) return true;
+        }
+        return false;
     }
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
