@@ -16,6 +16,7 @@ public class Master {
 
     private AlbumDataLoader mAlbumDataLoader;
     private UserPrefLoader mUserPrefLoader;
+    private  DropBoxer mDropBoxer;
 
     public void init(Context context)
     {
@@ -23,7 +24,10 @@ public class Master {
         mAlbumDataLoader.init(context);
         mUserPrefLoader = new UserPrefLoader();
         mUserPrefLoader.init(context);
+        mDropBoxer = new DropBoxer();
     }
+
+    public DropBoxer getDropBoxer(){ return  mDropBoxer; }
 
     public AlbumDataLoader getAlbumDataLoader()
     {

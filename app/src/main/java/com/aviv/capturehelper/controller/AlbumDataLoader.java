@@ -2,6 +2,7 @@ package com.aviv.capturehelper.controller;
 
 import com.aviv.capturehelper.common.Util;
 import com.aviv.capturehelper.model.dao.AlbumData;
+import com.aviv.capturehelper.model.dao.AlbumDataDao;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -25,7 +26,7 @@ public class AlbumDataLoader extends Loader<AlbumData> {
 
     @Override
     AlbumData get(long key) {
-        return getDao().load(key);
+         return getDao().load(key);
     }
 
     @Override
@@ -56,10 +57,12 @@ public class AlbumDataLoader extends Loader<AlbumData> {
     @Override
     public List<AlbumData> getAll() {
         if(mLoadedList.size() == 0 && getDao().count() > 0) {
-            mLoadedList = getDao().loadAll();
+            mLoadedList = getDao().queryBuilder().orderDesc(AlbumDataDao.Properties.Isnew).orderAsc(AlbumDataDao.Properties.Name).build().list();
         }
 
         invaildData(mLoadedList);
+
+        //Collections.sort(mLoadedList, Const.albumComparator);
         return mLoadedList;
     }
     public AlbumData get(String album)
@@ -105,7 +108,27 @@ public class AlbumDataLoader extends Loader<AlbumData> {
         getDao().insertOrReplace(data);
     }
 
+    public void update(AlbumData data){
+        for(int i = 0 ; i < mLoadedList.size() ; ++i)
+        {
+            AlbumData albumData = mLoadedList.get(i);
+            if(albumData.getId().equals(data.getId())){
+                mLoadedList.set(i, data);
+                break;
+            }
+        }
+        getDao().insertOrReplace(data);
+    }
+
     @Override
     void insert(ArrayList<AlbumData> arr) {
+    }
+
+    @Override
+    public void delete(AlbumData data) {
+        if(mLoadedList.contains(data))
+            mLoadedList.remove(data);
+
+        getDao().delete(data);
     }
 }

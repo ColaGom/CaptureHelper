@@ -36,6 +36,18 @@ public class UserPrefLoader {
         editor.commit();
     }
 
+    private final  String KEY_CLOUD_TOKEN = "key.cloud.token";
+
+    public void setCloudToken(String value){
+        SharedPreferences.Editor editor = mPrefer.edit();
+        editor.putString(KEY_CLOUD_TOKEN, value);
+        editor.commit();
+    }
+
+    public String getCloudToken(){
+        return mPrefer.getString(KEY_CLOUD_TOKEN, "");
+    }
+
     private final  String KEY_SAVE_FOLDER_PATH = "key.save.folder";
 
     public String getFolderPath()
@@ -82,6 +94,16 @@ public class UserPrefLoader {
     public String getSaveFileName()
     {
         return String.format("%s_%s.jpg",getSavePrefix(), Util.getNowDateString(new SimpleDateFormat(getSaveSuffix())));
+    }
+
+    private  final String KEY_ENABLE_DROPBOX = "key.enable.dropbox";
+
+    public boolean getEnableDropbox(){ return mPrefer.getBoolean(KEY_ENABLE_DROPBOX, false); }
+
+    public void setEnableDropbox(boolean enable){
+        SharedPreferences.Editor editor = mPrefer.edit();
+        editor.putBoolean(KEY_ENABLE_DROPBOX, enable);
+        editor.commit();
     }
 
     private  final String KEY_ENABLE_HELPER = "key.enable.helper";

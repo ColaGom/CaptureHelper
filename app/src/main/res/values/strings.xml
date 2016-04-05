@@ -75,4 +75,5 @@
     <string name="title_image_delete">삭제</string>
     <string name="title_image_move">이동</string>
     <string name="msg_contains_album">동일한 이름을 가진 앨범이 존재합니다.</string>
+    <string name="title_activity_modify_album">앨범 수정</string>
 </resources>

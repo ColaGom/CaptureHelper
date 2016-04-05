@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.support.v7.widget.SwitchCompat;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -16,6 +17,8 @@ import com.aviv.capturehelper.controller.ActivityStarter;
 import com.aviv.capturehelper.controller.Master;
 import com.aviv.capturehelper.controller.UserPrefLoader;
 import com.aviv.capturehelper.view.dialog.DirectoryChooserDialog;
+import com.dropbox.client2.DropboxAPI;
+import com.dropbox.client2.android.AndroidAuthSession;
 import com.orhanobut.logger.Logger;
 
 import butterknife.Bind;
@@ -30,6 +33,8 @@ public class SettingActivity extends BaseActivity implements DirectoryChooserDia
     @Bind(R.id.tv_save_folder)
     TextView mTvSaveFolder;
 
+    @Bind(R.id.sc_dropbox)
+    SwitchCompat mScDropbox;
 
     @Bind(R.id.sc_lock)
     SwitchCompat mScLock;
@@ -65,7 +70,7 @@ public class SettingActivity extends BaseActivity implements DirectoryChooserDia
         });
     }
 
-    @OnClick({R.id.btn_app_share, R.id.sc_lock, R.id.btn_save_folder, R.id.btn_version})
+    @OnClick({R.id.btn_app_share, R.id.sc_dropbox, R.id.sc_lock, R.id.btn_save_folder, R.id.btn_version})
     void onClick(View v) {
         int id = v.getId();
 
@@ -75,6 +80,14 @@ public class SettingActivity extends BaseActivity implements DirectoryChooserDia
                 break;
             case R.id.btn_app_share:
                 ActivityStarter.startAppShareIntent(this);
+                break;
+            case R.id.sc_dropbox:
+                if(mScDropbox.isChecked()){
+                    DropboxAPI<AndroidAuthSession> api = Master.getInstance().getDropBoxer().getDBApi();
+                    api.getSession().startOAuth2Authentication(this);
+                }else{
+                    Master.getInstance().getUserPrefLoader().setEnableDropbox(false);
+                }
                 break;
             case R.id.sc_lock:
                 if(mScLock.isChecked()) {
@@ -102,6 +115,22 @@ public class SettingActivity extends BaseActivity implements DirectoryChooserDia
     protected void onResume() {
         super.onResume();
         setScLock();
+
+        DropboxAPI<AndroidAuthSession> api = Master.getInstance().getDropBoxer().getDBApi();
+
+        if(api.getSession().authenticationSuccessful()){
+            try {
+                api.getSession().finishAuthentication();
+                String accessToken = api.getSession().getOAuth2AccessToken();
+                Log.d(Const.TAG, "[SettingActivity]authenticationSuccessful" + accessToken);
+                UserPrefLoader loader = Master.getInstance().getUserPrefLoader();
+                loader.setEnableDropbox(true);
+                loader.setCloudToken(accessToken);
+                mScDropbox.setChecked(true);
+            }catch (IllegalStateException e){
+                e.printStackTrace();
+            }
+        }
     }
 
     @Override

@@ -296,7 +296,8 @@ public class MainActivity extends BaseActivity
                 Dialoger.showAlertDialog(MainActivity.this, getString(R.string.title_delete_album), message, new Dialoger.AlertListener() {
                     @Override
                     public void onClickYes() {
-
+                        Master.getInstance().getAlbumDataLoader().delete(albumData);
+                        refresh();
                     }
 
                     @Override
@@ -317,6 +318,7 @@ public class MainActivity extends BaseActivity
             @Override
             public void onClick(View v) {
                 mDialog.dismiss();
+                startModifyAlbumActivity(albumData);
             }
         };
     }
@@ -326,11 +328,13 @@ public class MainActivity extends BaseActivity
     public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
         WrapAlbumData albumData = (WrapAlbumData) parent.getItemAtPosition(position);
 
-        if (mDialog == null) {
-            mDialog = new CustomDialog(this);
-            mDialog.addButton(getString(R.string.label_delete), getDeleteListener(albumData));
-            mDialog.addButton(getString(R.string.label_modify), getModifyListener(albumData));
+        if (mDialog != null && mDialog.isShowing()) {
+            mDialog.dismiss();
         }
+
+        mDialog = new CustomDialog(this);
+        mDialog.addButton(getString(R.string.label_delete), getDeleteListener(albumData));
+        mDialog.addButton(getString(R.string.label_modify), getModifyListener(albumData));
 
         mDialog.setTitle(albumData.getValue().getName());
 

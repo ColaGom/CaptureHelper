@@ -98,7 +98,7 @@ public class AdapterGridAlbum extends ArrayAdapter<WrapAlbumData> {
 
                 if(files.length > 0)
                 {
-                    Glide.with(mContext).load(directory.listFiles()[0]).centerCrop().crossFade().into(ivImage);
+                    Glide.with(mContext).load(files[0]).centerCrop().crossFade().into(ivImage);
                     tvCount.setText(mPrefixCount + " " + files.length + mSuffixCount);
                 }else{
                     tvCount.setText(mEmptyAlbum);

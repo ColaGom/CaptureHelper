@@ -9,8 +9,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.aviv.capturehelper.R;
+import com.aviv.capturehelper.common.Util;
 import com.aviv.capturehelper.model.wrapper.WrapAlbumData;
+import com.bumptech.glide.Glide;
 
+import java.io.File;
 import java.util.List;
 
 import butterknife.Bind;
@@ -93,6 +96,14 @@ public class AdapterAlbum extends ArrayAdapter<WrapAlbumData> {
             }
             else {
                 tvName.setText(data.getValue().getName());
+            }
+
+            File[] files = Util.getListOfImageFiles(data.getValue().getPath());
+
+            if(files.length > 0){
+                Glide.with(mContext).load(files[0]).transform(new Util.CircleTransform(getContext())).crossFade().into(ivImage);
+            }else{
+                ivImage.setImageResource(android.R.color.transparent);
             }
 
             if(mSelectedAlbum != null && mSelectedAlbum.equals(data))

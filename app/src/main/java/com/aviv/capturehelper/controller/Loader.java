@@ -37,4 +37,5 @@ public abstract class Loader<T>  {
     abstract List<T> getAll();
     abstract  void insert(T data);
     abstract void insert(ArrayList<T> arr);
+    abstract  void delete(T data);
 }

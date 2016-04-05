@@ -18,6 +18,7 @@ public class BaseActivity extends AppCompatActivity {
 
     protected final int REQUEST_CREATE_ALBUM = 1;
     protected final int REQUEST_ALBUM = 2;
+    protected final int REQUEST_MODIFY_ALBUM = 3;
 
     protected void finishedAlbumCreate(int resultCode) {
         Logger.d("finishedAlbumCreate");
@@ -66,7 +67,16 @@ public class BaseActivity extends AppCompatActivity {
     protected  void startCreateAlbumActivity()
     {
         Intent i = new Intent(this, CreateAlbumActivity.class);
+        i.putExtra(Const.EXTRA_TYPE, CreateAlbumActivity.TYPE_CREATE);
         startActivityForResult(i, REQUEST_CREATE_ALBUM);
+    }
+
+    protected  void startModifyAlbumActivity(AlbumData albumData)
+    {
+        Intent i = new Intent(this, CreateAlbumActivity.class);
+        i.putExtra(Const.EXTRA_TYPE, CreateAlbumActivity.TYPE_MODIFY);
+        i.putExtra(Const.EXTRA_SERIALIZE_ALBUM, albumData);
+        startActivityForResult(i, REQUEST_MODIFY_ALBUM);
     }
 
     protected  void startLockValidActivity()
