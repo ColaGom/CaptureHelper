@@ -105,10 +105,10 @@ public class CaptureService extends Service implements ICaptureListener {
     public void onCapture(String path) {
         if(!Master.getInstance().getUserPrefLoader().getEnableHelper()) return;
         Intent intent = new Intent(this, AlbumPopupActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-        intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//        intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+//        intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
         intent.putExtra(Const.EXTRA_FILE_PATH, path);
         startActivity(intent);
 
@@ -166,7 +166,7 @@ public class CaptureService extends Service implements ICaptureListener {
         PendingIntent pIntent = PendingIntent.getBroadcast(this, (int) System.currentTimeMillis(), intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         Notification n = new Notification.Builder(this)
-                .setSmallIcon(R.mipmap.ic_launcher)
+                .setSmallIcon(R.drawable.ic_launcher)
                 .setAutoCancel(false)
                 .build();
 

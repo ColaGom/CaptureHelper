@@ -1,5 +1,6 @@
 package com.aviv.capturehelper.view.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -71,6 +72,12 @@ public class AlbumPopupActivity extends BaseActivity implements AdapterView.OnIt
         Glide.with(this).load(mPath).listener(mListener).into(mIvPreview);
         mTvPreview.setText(mPath);
 
+       // setAlbumListView();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         setAlbumListView();
     }
 
@@ -120,6 +127,11 @@ public class AlbumPopupActivity extends BaseActivity implements AdapterView.OnIt
     }
 
     @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         final WrapAlbumData albumData = mAdapter.getItem(position);
 
@@ -138,7 +150,6 @@ public class AlbumPopupActivity extends BaseActivity implements AdapterView.OnIt
                        Master.getInstance().getDropBoxer().uploadFile(movedFile);
                     finish();
                 }
-
                 @Override
                 public void onClickNo() {
 

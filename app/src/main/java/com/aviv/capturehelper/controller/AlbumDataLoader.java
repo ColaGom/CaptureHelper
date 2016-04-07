@@ -1,12 +1,13 @@
 package com.aviv.capturehelper.controller;
 
+import com.aviv.capturehelper.common.Const;
 import com.aviv.capturehelper.common.Util;
 import com.aviv.capturehelper.model.dao.AlbumData;
-import com.aviv.capturehelper.model.dao.AlbumDataDao;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -57,12 +58,12 @@ public class AlbumDataLoader extends Loader<AlbumData> {
     @Override
     public List<AlbumData> getAll() {
         if(mLoadedList.size() == 0 && getDao().count() > 0) {
-            mLoadedList = getDao().queryBuilder().orderDesc(AlbumDataDao.Properties.Isnew).orderAsc(AlbumDataDao.Properties.Name).build().list();
+            mLoadedList = getDao().loadAll();
         }
 
         invaildData(mLoadedList);
 
-        //Collections.sort(mLoadedList, Const.albumComparator);
+        Collections.sort(mLoadedList, Const.albumComparator);
         return mLoadedList;
     }
     public AlbumData get(String album)

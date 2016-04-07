@@ -1,6 +1,7 @@
 package com.aviv.capturehelper.common;
 
 import com.aviv.capturehelper.model.dao.AlbumData;
+import com.orhanobut.logger.Logger;
 
 import java.util.Comparator;
 
@@ -27,7 +28,7 @@ public class Const {
     public static  final int QUALITY_ORIGIN = 1;
 
     public static final  String APP_URL_FOR_MARKET = "market://details?id=com.aviv.capturehelper";
-    public static final  String APP_URL_FOR_INVITE = "https://play.google.com/store/apps/details?id=com.aviv.autocallrecorder";
+    public static final  String APP_URL_FOR_INVITE = "https://play.google.com/store/apps/details?id=com.aviv.capturehelper";
 
     public static final int MINIMUN_PATTERN = 4;
 
@@ -35,17 +36,16 @@ public class Const {
         @Override
         public int compare(AlbumData lhs, AlbumData rhs) {
 
-
+            Logger.d("compare : " + lhs.getIsnew() + "//" + rhs.getIsnew());
             if(lhs.getIsnew())
             {
                 if(rhs.getIsnew())
                 {
-                    return lhs.getName().compareTo(rhs.getName());
+                    return rhs.getName().compareTo(lhs.getName());
                 }
-                else return 1;
+                else return -1;
             }
-            return 0;
-           // return lhs.getName().compareTo(rhs.getName());
+            return rhs.getName().compareTo(lhs.getName());
         }
     };
 }
