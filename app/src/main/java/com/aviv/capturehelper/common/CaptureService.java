@@ -133,6 +133,10 @@ public class CaptureService extends Service implements ICaptureListener {
     }
 
 
+    /**
+     * monitoring all file in root directory
+     * @param root root file
+     */
     private void monitorAllFiles(File root) {
         File[] files = root.listFiles();
         for(File file : files) {
@@ -149,6 +153,11 @@ public class CaptureService extends Service implements ICaptureListener {
         }
     }
 
+    /**
+     * check file name in filter
+     * @param name file name
+     * @return
+     */
     private boolean containsFilter(String name)
     {
         for(String filter:filters)
