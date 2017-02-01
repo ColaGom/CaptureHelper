@@ -15,8 +15,8 @@ import java.io.FileInputStream;
  * Created by Counter on 2016-01-17.
  */
 public class DropBoxer {
-    final static private String APP_KEY = "vsns9ctie46227p";
-    final static private String APP_SECRET = "qhu7h5f4gut9i47";
+    final static private String APP_KEY = "#";
+    final static private String APP_SECRET = "#";
 
     private DropboxAPI<AndroidAuthSession> mDBApi;
     AppKeyPair appKeyPair = new AppKeyPair(APP_KEY, APP_SECRET);
